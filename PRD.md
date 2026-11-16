@@ -14,10 +14,11 @@ Aplikasi web untuk membagi tagihan bersama (makan bareng, arisan, trip) tanpa re
 - Mode split: merata ATAU per-item dengan porsi (mis. A: 2 porsi, B: 1 porsi)
 - Ringkasan saldo per anggota (net: +/-)
 - Settlement: daftar transfer minimal (A → B Rp X) sampai semua lunas
-- Tandai bill sebagai "lunas/dihapus" (soft delete), anggota bisa keluar dari room
+- Tandai bill sebagai "lunas/dihapus" (soft delete)
 
 ## 4. Di Luar Scope v1
-Login/registrasi, multi-currency, scan struk (OCR), notifikasi, chat, export PDF, mobile app
+- Fitur "anggota keluar dari room" — ditunda dari v1 ke backlog v2 (keputusan 2026-11-16)
+- Login/registrasi, multi-currency, scan struk (OCR), notifikasi, chat, export PDF, mobile app
 
 ## 5. Requirement Teknis
 - Next.js App Router + TypeScript, SQLite + Prisma, satu proses Node
