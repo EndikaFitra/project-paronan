@@ -20,6 +20,9 @@ prisma/dev.db
 # testing
 /coverage
 
+# agent logs
+.claude-*.log
+
 # misc
 .DS_Store
 *.pem

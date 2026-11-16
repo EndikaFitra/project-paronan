@@ -1,4 +1,5 @@
-// Skema awal — detail model akan disesuaikan pada tahap berikutnya.
+// Skema database Split Bill App v1.
+// Uang disimpan sebagai integer rupiah (tanpa desimal).
 
 generator client {
   provider = "prisma-client-js"
@@ -11,8 +12,8 @@ datasource db {
 
 model Room {
   id         String    @id @default(cuid())
-  code       String    @unique
   name       String
+  code       String    @unique
   adminToken String    @unique
   createdAt  DateTime  @default(now())
   members    Member[]
@@ -28,18 +29,19 @@ model Member {
   expenses  Expense[]      @relation("ExpensePayer")
   splits    ExpenseSplit[]
 
+  @@unique([roomId, name])
   @@index([roomId])
 }
 
 model Expense {
   id          String         @id @default(cuid())
   roomId      String
-  payerId     String
   description String
   amount      Int
-  splitMode   String         @default("EVEN")
-  createdAt   DateTime       @default(now())
+  payerId     String
+  splitMode   String         @default("EQUALS") // "EQUALS" | "SHARES" (SQLite tidak mendukung enum Prisma)
   deletedAt   DateTime?
+  createdAt   DateTime       @default(now())
   room        Room           @relation(fields: [roomId], references: [id], onDelete: Cascade)
   payer       Member         @relation("ExpensePayer", fields: [payerId], references: [id])
   splits      ExpenseSplit[]
@@ -52,7 +54,7 @@ model ExpenseSplit {
   id        String   @id @default(cuid())
   expenseId String
   memberId  String
-  share     Int      @default(1)
+  shares    Int      @default(1)
   amount    Int
   createdAt DateTime @default(now())
   expense   Expense  @relation(fields: [expenseId], references: [id], onDelete: Cascade)
