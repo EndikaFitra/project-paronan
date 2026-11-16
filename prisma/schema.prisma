@@ -1,0 +1,63 @@
+// Skema awal — detail model akan disesuaikan pada tahap berikutnya.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Room {
+  id         String    @id @default(cuid())
+  code       String    @unique
+  name       String
+  adminToken String    @unique
+  createdAt  DateTime  @default(now())
+  members    Member[]
+  expenses   Expense[]
+}
+
+model Member {
+  id        String         @id @default(cuid())
+  roomId    String
+  name      String
+  createdAt DateTime       @default(now())
+  room      Room           @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  expenses  Expense[]      @relation("ExpensePayer")
+  splits    ExpenseSplit[]
+
+  @@index([roomId])
+}
+
+model Expense {
+  id          String         @id @default(cuid())
+  roomId      String
+  payerId     String
+  description String
+  amount      Int
+  splitMode   String         @default("EVEN")
+  createdAt   DateTime       @default(now())
+  deletedAt   DateTime?
+  room        Room           @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  payer       Member         @relation("ExpensePayer", fields: [payerId], references: [id])
+  splits      ExpenseSplit[]
+
+  @@index([roomId])
+  @@index([payerId])
+}
+
+model ExpenseSplit {
+  id        String   @id @default(cuid())
+  expenseId String
+  memberId  String
+  share     Int      @default(1)
+  amount    Int
+  createdAt DateTime @default(now())
+  expense   Expense  @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  member    Member   @relation(fields: [memberId], references: [id])
+
+  @@unique([expenseId, memberId])
+  @@index([memberId])
+}
