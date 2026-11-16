@@ -1,0 +1,9 @@
+/** Indikator loading kecil yang mengikuti warna teks induknya. */
+export function Spinner({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <span
+      aria-hidden
+      className={`${className} inline-block shrink-0 animate-spin rounded-full border-2 border-current border-t-transparent`}
+    />
+  );
+}
