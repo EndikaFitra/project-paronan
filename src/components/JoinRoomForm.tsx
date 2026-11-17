@@ -91,7 +91,7 @@ export function JoinRoomForm() {
         </label>
         <input
           id="join-room-code"
-          className={`${inputClass} font-mono tracking-[0.2em] uppercase`}
+          className={`${inputClass} tnum tracking-[0.2em] uppercase`}
           type="text"
           value={code}
           onChange={(event) => setCode(event.target.value)}

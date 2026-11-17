@@ -18,6 +18,7 @@ import {
   secondaryButtonClass,
 } from "@/src/components/styles";
 import { Spinner } from "@/src/components/Spinner";
+import { PlusIcon } from "@/src/components/icons";
 
 const MAX_DESCRIPTION_LENGTH = 100;
 
@@ -163,7 +164,7 @@ export function AddBillForm({ room, currentMemberId }: AddBillFormProps) {
 
   return (
     <section
-      className="rounded-2xl border border-zinc-200 bg-white shadow-sm"
+      className="rounded-2xl border-2 border-chalk-yellow bg-chalk-yellow/10"
       aria-labelledby="tambah-tagihan-title"
     >
       <button
@@ -176,26 +177,28 @@ export function AddBillForm({ room, currentMemberId }: AddBillFormProps) {
         <span>
           <span
             id="tambah-tagihan-title"
-            className="block text-lg font-semibold text-zinc-900"
+            className="block font-chalk text-2xl text-chalk-yellow"
           >
             Tambah Tagihan
           </span>
-          <span className="mt-0.5 block text-sm text-zinc-500">
+          <span className="mt-0.5 block text-sm text-chalk-dim">
             Catat pengeluaran yang perlu dibagi bareng.
           </span>
         </span>
         <span
           aria-hidden
-          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-lg font-semibold text-indigo-700 transition-transform ${open ? "rotate-45" : ""}`}
+          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-chalk-yellow text-chalk-yellow transition-transform ${
+            open ? "rotate-45" : ""
+          }`}
         >
-          +
+          <PlusIcon />
         </span>
       </button>
 
       {open ? (
         <form
           id={`${fieldId}-panel`}
-          className="space-y-5 border-t border-zinc-200 px-5 py-5 sm:px-6"
+          className="chalk-dust relative space-y-5 border-t-2 border-chalk-yellow/40 px-5 py-5 sm:px-6"
           onSubmit={handleSubmit}
           noValidate
         >
@@ -222,12 +225,12 @@ export function AddBillForm({ room, currentMemberId }: AddBillFormProps) {
                 Nominal (rupiah)
               </label>
               <div className="relative">
-                <span className="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-sm font-medium text-zinc-500">
+                <span className="tnum pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-sm font-medium text-chalk-dim">
                   Rp
                 </span>
                 <input
                   id={`${fieldId}-amount`}
-                  className={`${inputClass} pl-10 text-right tabular-nums`}
+                  className={`${inputClass} tnum pl-11 pr-3.5 text-right text-base`}
                   type="text"
                   inputMode="numeric"
                   autoComplete="off"
@@ -248,7 +251,7 @@ export function AddBillForm({ room, currentMemberId }: AddBillFormProps) {
               </label>
               <select
                 id={`${fieldId}-payer`}
-                className={inputClass}
+                className={`${inputClass} appearance-none`}
                 value={payerId}
                 onChange={(event) => handlePayerChange(event.target.value)}
                 disabled={submitting}
@@ -263,7 +266,7 @@ export function AddBillForm({ room, currentMemberId }: AddBillFormProps) {
 
             <fieldset>
               <legend className={labelClass}>Mode split</legend>
-              <div className="grid grid-cols-2 gap-1 rounded-xl bg-zinc-100 p-1">
+              <div className="grid grid-cols-2 gap-1.5 rounded-lg border-2 border-chalk/40 bg-board-deep p-1.5">
                 {(
                   [
                     { value: "EQUALS", label: "Merata" },
@@ -278,10 +281,10 @@ export function AddBillForm({ room, currentMemberId }: AddBillFormProps) {
                       onClick={() => setMode(option.value)}
                       disabled={submitting}
                       aria-pressed={active}
-                      className={`rounded-lg px-3 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 ${
+                      className={`min-h-10 rounded-md px-3 py-2 font-chalk text-base transition disabled:cursor-not-allowed disabled:opacity-60 ${
                         active
-                          ? "bg-white text-indigo-700 shadow-sm"
-                          : "text-zinc-600 hover:text-zinc-900"
+                          ? "bg-chalk-yellow font-bold text-board-deep"
+                          : "text-chalk-dim hover:text-chalk"
                       }`}
                     >
                       {option.label}
@@ -294,15 +297,15 @@ export function AddBillForm({ room, currentMemberId }: AddBillFormProps) {
 
           <div>
             <div className="mb-1.5 flex items-baseline justify-between gap-3">
-              <span className="text-sm font-medium text-zinc-700">
+              <span className="text-sm font-medium text-chalk-dim">
                 Peserta yang ikut menanggung
               </span>
-              <span className="text-xs text-zinc-500">
+              <span className="tnum text-xs text-chalk-faint">
                 {participants.length} dari {room.members.length} anggota
               </span>
             </div>
 
-            <ul className="divide-y divide-zinc-100 rounded-xl border border-zinc-200">
+            <ul className="divide-y divide-chalk/15 rounded-lg border-2 border-chalk/30 bg-board-deep">
               {room.members.map((member) => {
                 const isPayer = member.id === payerId;
                 const checked = isSelected(member.id);
@@ -311,7 +314,7 @@ export function AddBillForm({ room, currentMemberId }: AddBillFormProps) {
                 return (
                   <li
                     key={member.id}
-                    className="flex items-center gap-3 px-4 py-3"
+                    className="flex flex-wrap items-center gap-3 px-4 py-3"
                   >
                     <input
                       id={checkboxId}
@@ -319,15 +322,15 @@ export function AddBillForm({ room, currentMemberId }: AddBillFormProps) {
                       checked={checked}
                       onChange={() => toggleParticipant(member.id)}
                       disabled={submitting || isPayer}
-                      className="h-4 w-4 shrink-0 rounded border-zinc-300 accent-indigo-600 disabled:opacity-70"
+                      className="h-5 w-5 shrink-0 accent-chalk-yellow disabled:opacity-70"
                     />
                     <label
                       htmlFor={checkboxId}
-                      className="min-w-0 flex-1 cursor-pointer text-sm text-zinc-800"
+                      className="min-w-0 flex-1 cursor-pointer text-sm text-chalk"
                     >
-                      <span className="truncate">{member.name}</span>
+                      <span className="break-words">{member.name}</span>
                       {isPayer ? (
-                        <span className="ml-2 rounded bg-indigo-50 px-1.5 py-0.5 text-xs font-medium text-indigo-700">
+                        <span className="ml-2 rounded-sm border border-chalk/40 bg-chalk/10 px-1.5 py-0.5 text-xs font-medium text-chalk-dim">
                           Pembayar
                         </span>
                       ) : null}
@@ -336,7 +339,7 @@ export function AddBillForm({ room, currentMemberId }: AddBillFormProps) {
                     {mode === "SHARES" && checked ? (
                       <div className="flex shrink-0 items-center gap-1.5">
                         <label
-                          className="text-xs text-zinc-500"
+                          className="text-xs text-chalk-faint"
                           htmlFor={`${checkboxId}-shares`}
                         >
                           Porsi
@@ -347,7 +350,7 @@ export function AddBillForm({ room, currentMemberId }: AddBillFormProps) {
                           min={1}
                           step={1}
                           inputMode="numeric"
-                          className="w-16 rounded-lg border border-zinc-300 px-2 py-1 text-right text-sm tabular-nums outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 disabled:bg-zinc-100"
+                          className="tnum w-16 rounded-md border border-chalk/40 bg-board-deep px-2 py-1 text-right text-sm text-chalk outline-none focus:border-chalk-yellow focus:ring-2 focus:ring-chalk-yellow/70 disabled:opacity-70"
                           value={shares[member.id] ?? "1"}
                           onChange={(event) =>
                             setShares((current) => ({

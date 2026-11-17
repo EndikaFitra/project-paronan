@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import type { RoomSummary } from "@/src/lib/api";
 import {
@@ -9,8 +9,13 @@ import {
   readApiResponse,
 } from "@/src/lib/client-api";
 import { formatRupiah, formatTanggal } from "@/src/lib/format";
-import { errorTextClass } from "@/src/components/styles";
+import {
+  errorTextClass,
+  paperChipClass,
+  paperDangerButtonClass,
+} from "@/src/components/styles";
 import { Spinner } from "@/src/components/Spinner";
+import { XIcon } from "@/src/components/icons";
 
 interface BillListProps {
   room: RoomSummary;
@@ -19,26 +24,143 @@ interface BillListProps {
 
 type Bill = RoomSummary["bills"][number];
 
+/** Konfirmasi hapus inline: sobekan nota kecil di dalam nota tagihan. */
+function DeleteConfirm({
+  bill,
+  deleting,
+  onConfirm,
+  onCancel,
+}: {
+  bill: Bill;
+  deleting: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
+}) {
+  const confirmButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Fokus pindah ke aksi konfirmasi saat slip terbuka; kembali ke pemicu
+  // ditangani lewat tombol pemicu di komponen induk (lihat handleDelete).
+  useEffect(() => {
+    confirmButtonRef.current?.focus();
+  }, []);
+
+  function handleKeyDown(event: React.KeyboardEvent) {
+    if (event.key === "Escape") {
+      event.stopPropagation();
+      onCancel();
+    }
+  }
+
+  const confirmId = `hapus-confirm-${bill.id}`;
+
+  return (
+    <div
+      id={confirmId}
+      className="relative -mt-1 min-w-0 rounded-t-sm border-2 border-dashed border-[#8f2f22]/50 bg-[#f0e6cd] px-4 pb-2.5 pt-3 shadow-paper"
+      role="alertdialog"
+      aria-modal={false}
+      aria-labelledby={`${confirmId}-title`}
+      aria-describedby={`${confirmId}-desc`}
+      onKeyDown={handleKeyDown}
+    >
+      <div
+        aria-hidden
+        className="absolute -top-1.5 left-1/2 h-3 w-1.5 -translate-x-1/2 rounded-full bg-wood-dark"
+      />
+      <p
+        id={`${confirmId}-title`}
+        className="font-chalk text-lg text-[#201c16]"
+      >
+        Hapus tagihan ini?
+      </p>
+      <p
+        id={`${confirmId}-desc`}
+        className="mt-0.5 min-w-0 text-xs break-words text-[#5a5245]"
+      >
+        &quot;{bill.description}&quot; ({formatRupiah(bill.amount)}) — saldo
+        dihitung ulang dan tagihan tidak bisa dikembalikan.
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <button
+          ref={confirmButtonRef}
+          type="button"
+          onClick={onConfirm}
+          disabled={deleting}
+          className={`${paperDangerButtonClass} min-h-11 px-3`}
+        >
+          {deleting ? <Spinner className="h-3 w-3" /> : null}
+          {deleting ? "Menghapus…" : "Ya, hapus"}
+        </button>
+        <button
+          type="button"
+          onClick={onCancel}
+          disabled={deleting}
+          className="inline-flex min-h-11 items-center justify-center rounded-md border border-[#201c16]/40 px-3 text-xs font-semibold text-[#201c16] transition hover:bg-[#201c16]/10 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          Batal
+        </button>
+      </div>
+    </div>
+  );
+}
+
 /** Daftar tagihan aktif; tombol hapus (soft delete) hanya untuk admin. */
 export function BillList({ room, isAdmin }: BillListProps) {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirmingId, setConfirmingId] = useState<string | null>(null);
+  const deleteTriggerRefs = useRef<Record<string, HTMLButtonElement | null>>(
+    {},
+  );
+  // Tombol pemicu di-unmount selama slip konfirmasi terbuka, jadi fokusnya
+  // dikembalikan setelah render ulang, bukan saat state masih berubah.
+  const pendingFocusId = useRef<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [lastAddedId, setLastAddedId] = useState<string | null>(null);
+
+  // Tagihan paling baru mendapat gerak "ditulis kapur" sekali.
+  const newestBillId = room.bills.at(-1)?.id ?? null;
+  if (newestBillId !== lastAddedId) {
+    setLastAddedId(newestBillId);
+  }
 
   const nameById = new Map(
     room.members.map((member) => [member.id, member.name]),
   );
 
+  // Bila nota dihapus dari daftar saat slipnya terbuka, tutup slip
+  // dan kembalikan fokus ke pemicu kalau masih ada.
+  useEffect(() => {
+    if (
+      confirmingId !== null &&
+      !room.bills.some((bill) => bill.id === confirmingId)
+    ) {
+      setConfirmingId(null);
+    }
+  }, [room.bills, confirmingId]);
+
+  function closeConfirm(billId: string) {
+    pendingFocusId.current = billId;
+    setConfirmingId((current) => (current === billId ? null : current));
+  }
+
+  // Setelah slip tertutup dan tombol pemicu kembali ke DOM, pulihkan fokus.
+  useEffect(() => {
+    const id = pendingFocusId.current;
+    if (!id || confirmingId === id) return;
+    const trigger = deleteTriggerRefs.current[id];
+    if (trigger) {
+      pendingFocusId.current = null;
+      trigger.focus();
+    }
+  }, [confirmingId]);
+
   async function handleDelete(bill: Bill) {
     if (deletingId) return;
 
-    const confirmed = window.confirm(
-      `Hapus tagihan "${bill.description}" (${formatRupiah(bill.amount)})? Saldo akan dihitung ulang dan tagihan tidak bisa dikembalikan.`,
-    );
-    if (!confirmed) return;
-
     setError(null);
     setDeletingId(bill.id);
+    pendingFocusId.current = bill.id;
     try {
       const response = await fetch(
         `/api/rooms/${encodeURIComponent(room.code)}/expenses/${encodeURIComponent(bill.id)}`,
@@ -56,94 +178,121 @@ export function BillList({ room, isAdmin }: BillListProps) {
       setError(NETWORK_ERROR_MESSAGE);
     } finally {
       setDeletingId(null);
+      setConfirmingId((current) => (current === bill.id ? null : current));
     }
   }
 
   return (
     <section aria-labelledby="tagihan-title">
-      <div className="mb-4 flex items-baseline justify-between gap-3">
-        <h2 id="tagihan-title" className="text-lg font-semibold text-zinc-900">
-          Daftar Tagihan
+      <div className="mb-5 flex flex-wrap items-baseline justify-between gap-3">
+        <h2 id="tagihan-title" className="font-chalk text-3xl text-chalk">
+          Nota di Papan
         </h2>
         {room.bills.length > 0 ? (
-          <span className="text-sm text-zinc-500">
-            Total {formatRupiah(room.bills.reduce((sum, bill) => sum + bill.amount, 0))}
+          <span className="tnum text-sm text-chalk-dim">
+            Total{" "}
+            {formatRupiah(room.bills.reduce((sum, bill) => sum + bill.amount, 0))}
           </span>
         ) : null}
       </div>
 
       {error ? (
-        <p className={`${errorTextClass} mb-3`} role="alert">
+        <p className={`${errorTextClass} mb-4`} role="alert">
           {error}
         </p>
       ) : null}
 
       {room.bills.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-zinc-300 bg-white px-5 py-10 text-center">
-          <p className="text-base font-medium text-zinc-800">
-            Belum ada tagihan.
-          </p>
-          <p className="mt-1 text-sm text-zinc-500">
+        <div className="rounded-2xl border-2 border-dashed border-chalk/30 px-5 py-10 text-center">
+          <p className="font-chalk text-xl text-chalk">Belum ada tagihan.</p>
+          <p className="mt-1 text-sm text-chalk-dim">
             Catat tagihan pertama!
           </p>
         </div>
       ) : (
-        <ul className="space-y-3">
-          {room.bills.map((bill) => (
-            <li
-              key={bill.id}
-              className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-5"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <h3 className="truncate font-semibold text-zinc-900">
-                    {bill.description}
-                  </h3>
-                  <p className="mt-1 text-sm text-zinc-500">
-                    Dibayar oleh{" "}
-                    <span className="font-medium text-zinc-700">
-                      {bill.payerName}
-                    </span>{" "}
-                    · {formatTanggal(bill.createdAt)} ·{" "}
-                    {bill.splitMode === "EQUALS" ? "Merata" : "Sesuai porsi"}
-                  </p>
-                </div>
-                <div className="flex shrink-0 flex-col items-end gap-2">
-                  <span className="text-base font-bold text-zinc-900 tabular-nums">
-                    {formatRupiah(bill.amount)}
-                  </span>
-                  {isAdmin ? (
-                    <button
-                      type="button"
-                      onClick={() => handleDelete(bill)}
-                      disabled={deletingId !== null}
-                      className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-xs font-semibold text-rose-600 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-60"
-                    >
-                      {deletingId === bill.id ? <Spinner className="h-3 w-3" /> : null}
-                      {deletingId === bill.id ? "Menghapus…" : "Hapus"}
-                    </button>
-                  ) : null}
-                </div>
-              </div>
-
-              <ul className="mt-3 flex flex-wrap gap-1.5">
-                {bill.splits.map((split) => (
-                  <li
-                    key={split.memberId}
-                    className="rounded-lg bg-zinc-100 px-2 py-1 text-xs text-zinc-700"
-                  >
-                    {nameById.get(split.memberId) ?? "Anggota"}{" "}
-                    <span className="font-semibold tabular-nums">
-                      {formatRupiah(split.amount)}
+        <ul className="grid gap-5 sm:grid-cols-2">
+          {room.bills.map((bill, index) => {
+            const isNewest = bill.id === lastAddedId && index === room.bills.length - 1;
+            const confirming = confirmingId === bill.id;
+            return (
+              <li
+                key={bill.id}
+                className={`paper-grain paper-torn relative rounded-t-sm bg-paper px-4 pt-4 pb-8 text-paper-ink shadow-paper ${
+                  index % 2 === 0 ? "-rotate-1" : "rotate-1"
+                } ${isNewest ? "bill-write" : ""}`}
+                style={{ animationDelay: isNewest ? "0.05s" : undefined }}
+              >
+                <div
+                  aria-hidden
+                  className="absolute -top-2 left-1/2 h-4 w-1.5 -translate-x-1/2 rounded-full bg-wood-dark"
+                />
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <h3 className="font-chalk break-words text-xl leading-snug text-paper-ink">
+                      {bill.description}
+                    </h3>
+                    <p className="mt-1 text-xs text-paper-muted">
+                      Dibayar oleh{" "}
+                      <span className="font-semibold text-paper-ink">
+                        {bill.payerName}
+                      </span>{" "}
+                      · {formatTanggal(bill.createdAt)} ·{" "}
+                      {bill.splitMode === "EQUALS" ? "Merata" : "Sesuai porsi"}
+                    </p>
+                  </div>
+                  <div className="flex shrink-0 flex-col items-end gap-2">
+                    <span className="tnum text-lg font-bold text-paper-ink">
+                      {formatRupiah(bill.amount)}
                     </span>
-                    {bill.splitMode === "SHARES" ? (
-                      <span className="text-zinc-500"> ({split.shares} porsi)</span>
+                    {isAdmin && !confirming ? (
+                      <button
+                        ref={(node) => {
+                          deleteTriggerRefs.current[bill.id] = node;
+                        }}
+                        type="button"
+                        onClick={() => setConfirmingId(bill.id)}
+                        disabled={deletingId !== null}
+                        className={`${paperDangerButtonClass} -my-3.5 min-h-11`}
+                      >
+                        <XIcon />
+                        Hapus
+                      </button>
                     ) : null}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
+                  </div>
+                </div>
+
+                <ul className="mt-3 flex flex-wrap gap-1.5">
+                  {bill.splits.map((split) => (
+                    <li
+                      key={split.memberId}
+                      className={paperChipClass}
+                    >
+                      <span className="font-medium text-paper-ink">
+                        {nameById.get(split.memberId) ?? "Anggota"}
+                      </span>{" "}
+                      <span className="tnum font-semibold text-paper-ink">
+                        {formatRupiah(split.amount)}
+                      </span>
+                      {bill.splitMode === "SHARES" ? (
+                        <span> ({split.shares} porsi)</span>
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+
+                {confirming ? (
+                  <div className="mt-3">
+                    <DeleteConfirm
+                      bill={bill}
+                      deleting={deletingId === bill.id}
+                      onConfirm={() => handleDelete(bill)}
+                      onCancel={() => closeConfirm(bill.id)}
+                    />
+                  </div>
+                ) : null}
+              </li>
+            );
+          })}
         </ul>
       )}
     </section>

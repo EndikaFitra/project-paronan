@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { secondaryButtonClass } from "@/src/components/styles";
+import { CopyIcon } from "@/src/components/icons";
 
 /** Tombol menyalin link room; menampilkan konfirmasi singkat. */
 export function CopyLinkButton({ code }: { code: string }) {
@@ -27,24 +28,21 @@ export function CopyLinkButton({ code }: { code: string }) {
       <button
         type="button"
         onClick={handleCopy}
-        className={`${secondaryButtonClass} px-3 py-2`}
+        className={`${secondaryButtonClass} px-3 py-2 text-sm`}
         aria-label="Salin link room"
       >
-        <svg
-          aria-hidden
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={1.8}
-          className="h-4 w-4"
-        >
-          <rect x="9" y="9" width="12" height="12" rx="2" />
-          <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" />
-        </svg>
+        <CopyIcon />
         {status === "copied" ? "Link tersalin!" : "Salin link"}
       </button>
+      {/* Konfirmasi tersalin diumumkan ke pembaca layar. */}
+      <p aria-live="polite" className="min-h-0 text-xs text-chalk-faint">
+        {status === "copied" ? "Link room tersalin ke papan klip." : ""}
+      </p>
       {status === "error" ? (
-        <p className="max-w-xs text-xs break-all text-rose-600" role="alert">
+        <p
+          className="max-w-xs text-xs break-all text-chalk-red"
+          role="alert"
+        >
           Gagal menyalin otomatis. Salin manual: {fallbackUrl}
         </p>
       ) : null}

@@ -1,5 +1,213 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------
+   Papan Tulis Warung — chalkboard world
+   Palettes, type, textures, and the single chalk write-on motion.
+   Textures are authored CSS/SVG only (no raster assets).
+------------------------------------------------------------------- */
+
+@theme {
+  /* Board */
+  --color-board: #16211d;
+  --color-board-deep: #0e1714;
+  /* Chalk */
+  --color-chalk: #f3efe4;
+  --color-chalk-dim: #b9c2ba;
+  --color-chalk-faint: #8d9a92;
+  --color-chalk-yellow: #e6c45c;
+  --color-chalk-red: #d9776a;
+  /* Wood */
+  --color-wood: #5a4130;
+  --color-wood-dark: #3e2b1f;
+  /* Paper */
+  --color-paper: #f5eeda;
+  --color-paper-ink: #201c16;
+  --color-paper-muted: #5a5245;
+
+  /* Type: next/font wires --font-kalam / --font-geist-mono / --font-figtree
+     on <html>; fallbacks keep the vars alive even if a face fails. */
+  --font-chalk: var(--font-kalam), "Segoe Print", "Bradley Hand", cursive;
+  --font-figure: var(--font-geist-mono), ui-monospace, "SFMono-Regular",
+    "Menlo", monospace;
+  --font-ui: var(--font-figtree), system-ui, sans-serif;
+  --font-sans: var(--font-figtree), system-ui, sans-serif;
+
+  --shadow-paper: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 20px -8px rgb(0 0 0 / 0.5);
+  --shadow-press: 0 3px 10px -2px rgb(0 0 0 / 0.45);
+
+  --animate-chalk-draw: chalk-draw 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s
+    both;
+  --animate-bill-write: bill-write 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-dust: dust 0.5s ease-out both;
+}
+
+/* Chalk dust grain — white noise, very low alpha (board). */
+@utility board-grain {
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.95 0 0 0 0 0.94 0 0 0 0 0.89 0 0 0 0.06 0'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>"),
+    radial-gradient(
+      ellipse at 20% 15%,
+      rgb(243 239 228 / 0.05),
+      transparent 55%
+    ),
+    radial-gradient(ellipse at 85% 90%, rgb(243 239 228 / 0.04), transparent 60%);
+}
+
+/* Wood grain for the frame. */
+@utility wood-grain {
+  background-color: #5a4130;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='120'><filter id='w'><feTurbulence type='fractalNoise' baseFrequency='0.02 0.28' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.24 0 0 0 0 0.16 0 0 0 0 0.1 0 0 0 0.22 0'/></filter><rect width='240' height='120' filter='url(%23w)'/></svg>"),
+    linear-gradient(180deg, #6b4d38 0%, #5a4130 45%, #4a3425 100%);
+}
+
+/* Paper fibre — warm dark noise (notes). */
+@utility paper-grain {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.13 0 0 0 0 0.11 0 0 0 0 0.08 0 0 0 0.08 0'/></filter><rect width='160' height='160' filter='url(%23p)'/></svg>");
+}
+
+/* ------------------------------------------------------------------
+   Base
+------------------------------------------------------------------- */
+
+html {
+  color-scheme: dark;
+}
+
 body {
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  background-color: var(--color-board-deep);
+  color: var(--color-chalk);
+  font-family: var(--font-ui);
+}
+
+/* Money, codes, counts: mono + tabular, everywhere. */
+.tnum {
+  font-family: var(--font-figure);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------
+   Browser surfaces
+------------------------------------------------------------------- */
+
+::selection {
+  background: var(--color-chalk-yellow);
+  color: var(--color-board-deep);
+}
+
+input,
+textarea,
+select {
+  caret-color: var(--color-chalk-yellow);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-chalk-yellow);
+  outline-offset: 2px;
+}
+
+a {
+  text-underline-offset: 3px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-wood) var(--color-board-deep);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-board-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-wood);
+  border-radius: 999px;
+  border: 2px solid var(--color-board-deep);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6b4d38;
+}
+
+/* ------------------------------------------------------------------
+   Signature motion — chalk write-on (authored once).
+   Content is visible by default; the draw only hides/reveals the
+   decorative stroke, and only when motion is allowed.
+------------------------------------------------------------------- */
+
+@keyframes chalk-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes bill-write {
+  from {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.3;
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+@keyframes dust {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  40% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .chalk-draw {
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 1;
+    animation: var(--animate-chalk-draw);
+  }
+
+  .bill-write {
+    animation: var(--animate-bill-write);
+  }
+
+  /* Chalk-dust puff when the add-bill panel opens. */
+  .chalk-dust::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='d'><feTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='2'/><feColorMatrix type='matrix' values='0 0 0 0 0.95 0 0 0 0 0.94 0 0 0 0 0.89 0 0 0 0.35 0'/></filter><rect width='120' height='120' filter='url(%23d)'/></svg>");
+    animation: var(--animate-dust);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Materials
+------------------------------------------------------------------- */
+
+/* Torn bottom edge for paper notes (mask, no raster). */
+.paper-torn {
+  -webkit-mask-image: linear-gradient(#000 0 0), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='14' preserveAspectRatio='none'><path d='M0 2 L14 8 L30 3 L46 9 L62 4 L80 10 L96 3 L112 8 L128 4 L144 9 L160 3 L178 8 L200 2 L200 14 L0 14 Z' fill='%23000'/></svg>");
+  mask-image: linear-gradient(#000 0 0), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='14' preserveAspectRatio='none'><path d='M0 2 L14 8 L30 3 L46 9 L62 4 L80 10 L96 3 L112 8 L128 4 L144 9 L160 3 L178 8 L200 2 L200 14 L0 14 Z' fill='%23000'/></svg>");
+  -webkit-mask-size: 100% calc(100% - 12px), 200px 12px;
+  mask-size: 100% calc(100% - 12px), 200px 12px;
+  -webkit-mask-position: top, bottom;
+  mask-position: top, bottom;
+  -webkit-mask-repeat: no-repeat, repeat-x;
+  mask-repeat: no-repeat, repeat-x;
 }

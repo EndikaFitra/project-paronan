@@ -9,7 +9,6 @@ import {
   readApiResponse,
 } from "@/src/lib/client-api";
 import {
-  cardClass,
   errorTextClass,
   inputClass,
   labelClass,
@@ -64,13 +63,13 @@ export function JoinRoomPanel({ code }: { code: string }) {
   return (
     <section
       id="gabung-room-panel"
-      className={`${cardClass} scroll-mt-6`}
+      className="scroll-mt-6 rounded-2xl border-2 border-dashed border-chalk-yellow/70 bg-chalk-yellow/10 p-5 sm:p-6"
       aria-labelledby="gabung-room-title"
     >
-      <h2 id="gabung-room-title" className="text-lg font-semibold text-zinc-900">
+      <h2 id="gabung-room-title" className="font-chalk text-2xl text-chalk-yellow">
         Gabung ke room ini
       </h2>
-      <p className="mt-1 text-sm text-zinc-600">
+      <p className="mt-1 text-sm text-chalk-dim">
         Masukkan namamu supaya teman-teman tahu kamu ikut menanggung tagihan.
       </p>
 
