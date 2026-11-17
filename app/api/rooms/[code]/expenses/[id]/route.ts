@@ -26,7 +26,7 @@ export async function DELETE(
     return apiError("Room tidak ditemukan. Periksa kembali kode room.", 404);
   }
 
-  const cookieToken = await getAdminCookie();
+  const cookieToken = await getAdminCookie(room.id);
   const bodyToken = await readAdminTokenFromBody(request);
   const token = cookieToken ?? bodyToken;
   if (!token || token !== room.adminToken) {

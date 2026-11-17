@@ -26,7 +26,7 @@ export default async function RoomPage({ params }: RoomPageProps) {
   const room = toRoomSummary(roomRecord);
 
   const [adminToken, memberCookie] = await Promise.all([
-    getAdminCookie(),
+    getAdminCookie(room.id),
     getMemberCookie(room.id),
   ]);
   const isAdmin = Boolean(adminToken) && adminToken === roomRecord.adminToken;

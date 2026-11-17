@@ -48,7 +48,7 @@ export async function POST(request: Request) {
   });
 
   const creator = room.members[0];
-  await setAdminCookie(adminToken);
+  await setAdminCookie(room.id, adminToken);
   await setMemberCookie(room.id, creator.id);
 
   return NextResponse.json(
