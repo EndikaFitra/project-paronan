@@ -48,5 +48,6 @@ export function isPositiveInteger(value: unknown): value is number {
   return typeof value === "number" && Number.isInteger(value) && value > 0;
 }
 
-export const MAX_NAME_LENGTH = 50;
-export const MAX_DESCRIPTION_LENGTH = 100;
+// Batas panjang teks tinggal di `limits.ts` (bebas `next/server`)
+// sehingga aman dipakai modul yang ikut ke bundle klien.
+export { MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH } from "./limits";

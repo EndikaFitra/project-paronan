@@ -4,6 +4,7 @@ import { AddBillForm } from "@/src/components/room/AddBillForm";
 import { BalanceSummary } from "@/src/components/room/BalanceSummary";
 import { BillList } from "@/src/components/room/BillList";
 import { JoinRoomPanel } from "@/src/components/room/JoinRoomPanel";
+import { RememberRoom } from "@/src/components/room/RememberRoom";
 import { RoomHeader } from "@/src/components/room/RoomHeader";
 import { SettlementPanel } from "@/src/components/room/SettlementPanel";
 import { StickyAddBillBar } from "@/src/components/room/StickyAddBillBar";
@@ -35,6 +36,7 @@ export default async function RoomPage({ params }: RoomPageProps) {
 
   return (
     <main className="mx-auto w-full max-w-5xl px-3 py-4 pb-28 sm:px-6 sm:py-8 lg:pb-8">
+      <RememberRoom code={room.code} name={room.name} />
       <BoardFrame>
         <div className="space-y-8 px-4 py-6 sm:px-7 sm:py-8 lg:px-10 lg:py-10">
           <RoomHeader

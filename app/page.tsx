@@ -3,6 +3,7 @@ import { JoinRoomForm } from "@/src/components/JoinRoomForm";
 import { BoardFrame } from "@/src/components/BoardFrame";
 import { ChalkUnderline, ChalkCircle } from "@/src/components/chalk";
 import { ChalkArrow } from "@/src/components/icons";
+import { LastRoomButton } from "@/src/components/LastRoomButton";
 
 /**
  * Nota contoh — demonstrasi mekanisme dengan data sintetis
@@ -90,8 +91,8 @@ export default function Home() {
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-6xl items-center px-3 py-6 sm:px-6 sm:py-10">
       <BoardFrame className="w-full">
-        <div className="grid gap-10 px-5 py-8 sm:px-8 sm:py-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12 lg:px-12 lg:py-14">
-          <section aria-labelledby="split-bill-title">
+        <div className="grid grid-cols-1 gap-10 px-5 py-8 sm:px-8 sm:py-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12 lg:px-12 lg:py-14">
+          <section aria-labelledby="split-bill-title" className="min-w-0">
             <h1
               id="split-bill-title"
               className="font-chalk text-6xl font-bold leading-none text-chalk sm:text-7xl lg:text-8xl"
@@ -103,6 +104,8 @@ export default function Home() {
               Tulis tagihan di papan ini, bagikan kodenya, dan semua orang
               langsung tahu harus transfer ke siapa.
             </p>
+
+            <LastRoomButton />
 
             <div className="mt-10 grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-1 lg:gap-8">
               <section
