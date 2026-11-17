@@ -1,0 +1,510 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-17T15:40:00.000Z",
+  "title": "Design System: Split Bill",
+  "extensions": {
+    "colorMeta": {
+      "board": {
+        "role": "neutral",
+        "displayName": "Batu Tulis Hijau-Hitam",
+        "canonical": "#16211d",
+        "tonalRamp": [
+          "#0a0e0d",
+          "#212826",
+          "#3b4541",
+          "#57645f",
+          "#77847f",
+          "#99a5a0",
+          "#c0cac6",
+          "#e6edea"
+        ]
+      },
+      "board-deep": {
+        "role": "neutral",
+        "displayName": "Batu Tulis Dalam",
+        "canonical": "#0e1714",
+        "tonalRamp": [
+          "#0a0e0d",
+          "#222826",
+          "#3c4542",
+          "#59635f",
+          "#78837f",
+          "#9aa4a0",
+          "#c1c9c6",
+          "#e7edeb"
+        ]
+      },
+      "chalk": {
+        "role": "neutral",
+        "displayName": "Kapur Putih",
+        "canonical": "#f3efe4",
+        "tonalRamp": [
+          "#0e0d0a",
+          "#282621",
+          "#45423a",
+          "#646057",
+          "#848076",
+          "#a5a198",
+          "#cac7c0",
+          "#edebe6"
+        ]
+      },
+      "chalk-dim": {
+        "role": "neutral",
+        "displayName": "Kapur Redup",
+        "canonical": "#b9c2ba",
+        "tonalRamp": [
+          "#0b0e0c",
+          "#232824",
+          "#3e443f",
+          "#5b635c",
+          "#7a837b",
+          "#9ca49d",
+          "#c3c9c4",
+          "#e8ece9"
+        ]
+      },
+      "chalk-faint": {
+        "role": "neutral",
+        "displayName": "Kapur Samar",
+        "canonical": "#8d9a92",
+        "tonalRamp": [
+          "#0a0e0c",
+          "#212824",
+          "#3b453f",
+          "#58645d",
+          "#77847c",
+          "#99a59e",
+          "#c1cac4",
+          "#e7ede9"
+        ]
+      },
+      "chalk-yellow": {
+        "role": "primary",
+        "displayName": "Kapur Kuning Warung",
+        "canonical": "#e6c45c",
+        "tonalRamp": [
+          "#160b00",
+          "#362300",
+          "#583e00",
+          "#7b5c00",
+          "#9c7c00",
+          "#bc9f44",
+          "#dcc684",
+          "#f9ebc0"
+        ]
+      },
+      "chalk-yellow-lift": {
+        "role": "primary",
+        "displayName": "Kapur Kuning Terangkat",
+        "canonical": "#f0d175",
+        "tonalRamp": [
+          "#1a0e00",
+          "#3a2600",
+          "#5e4200",
+          "#816000",
+          "#a48000",
+          "#c5a64a",
+          "#e5ce8b",
+          "#fdf0c6"
+        ]
+      },
+      "chalk-red": {
+        "role": "secondary",
+        "displayName": "Kapur Merah Tanah Liat",
+        "canonical": "#d9776a",
+        "tonalRamp": [
+          "#200202",
+          "#48100b",
+          "#71251e",
+          "#9a4036",
+          "#bf6055",
+          "#de8679",
+          "#fab3a8",
+          "#ffded6"
+        ]
+      },
+      "wood": {
+        "role": "neutral",
+        "displayName": "Kayu Bingkai",
+        "canonical": "#5a4130",
+        "tonalRamp": [
+          "#140b06",
+          "#322318",
+          "#533d2e",
+          "#745a49",
+          "#957a68",
+          "#b69c8b",
+          "#d8c3b5",
+          "#f6e8df"
+        ]
+      },
+      "wood-light": {
+        "role": "neutral",
+        "displayName": "Kayu Terang",
+        "canonical": "#6b4d38",
+        "tonalRamp": [
+          "#150b04",
+          "#342215",
+          "#553c2a",
+          "#775944",
+          "#997963",
+          "#b99b86",
+          "#dac2b2",
+          "#f8e8dd"
+        ]
+      },
+      "wood-mid": {
+        "role": "neutral",
+        "displayName": "Kayu Tengah",
+        "canonical": "#4a3425",
+        "tonalRamp": [
+          "#130b06",
+          "#312319",
+          "#513e30",
+          "#735b4b",
+          "#947a6a",
+          "#b49c8d",
+          "#d6c3b7",
+          "#f5e8e0"
+        ]
+      },
+      "wood-dark": {
+        "role": "neutral",
+        "displayName": "Kayu Bayangan",
+        "canonical": "#3e2b1f",
+        "tonalRamp": [
+          "#130b07",
+          "#30231b",
+          "#503e33",
+          "#715b4e",
+          "#917b6d",
+          "#b29d90",
+          "#d5c3b9",
+          "#f4e9e2"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Kertas Krem",
+        "canonical": "#f5eeda",
+        "tonalRamp": [
+          "#0f0d07",
+          "#2a261c",
+          "#474234",
+          "#66604f",
+          "#86806e",
+          "#a7a191",
+          "#ccc7ba",
+          "#eeebe2"
+        ]
+      },
+      "paper-ink": {
+        "role": "neutral",
+        "displayName": "Tinta Kertas",
+        "canonical": "#201c16",
+        "tonalRamp": [
+          "#0f0d0b",
+          "#292622",
+          "#46423c",
+          "#646059",
+          "#847f78",
+          "#a5a19a",
+          "#cac7c1",
+          "#edebe7"
+        ]
+      },
+      "paper-muted": {
+        "role": "neutral",
+        "displayName": "Tinta Kertas Redup",
+        "canonical": "#5a5245",
+        "tonalRamp": [
+          "#100d08",
+          "#2b261e",
+          "#484136",
+          "#675f52",
+          "#887f71",
+          "#a8a093",
+          "#cdc6bc",
+          "#efebe4"
+        ]
+      },
+      "paper-danger": {
+        "role": "tertiary",
+        "displayName": "Tinta Oksida Kertas",
+        "canonical": "#8f2f22",
+        "tonalRamp": [
+          "#210200",
+          "#490e07",
+          "#742218",
+          "#9d3d30",
+          "#c25e4e",
+          "#e18474",
+          "#fdb2a4",
+          "#ffddd3"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Tulisan Kapur",
+        "purpose": "Judul beranda saja. Satu per halaman, selalu dengan garis bawah kapur."
+      },
+      "headline": {
+        "displayName": "Nama di Papan",
+        "purpose": "Nama room di header; terpotong elipsis, tidak pernah membungkus tiga baris."
+      },
+      "title": {
+        "displayName": "Judul Blok",
+        "purpose": "Judul bagian dan judul nota: Buat Room, Gabung, Ringkasan Saldo, Nota di Papan."
+      },
+      "body": {
+        "displayName": "Penjelas",
+        "purpose": "Paragraf dan keterangan; 38–45ch, naik satu langkah di breakpoint sm."
+      },
+      "label": {
+        "displayName": "Label Form",
+        "purpose": "Label input dan keterangan meta; 0.875rem uppercase untuk form, 0.75rem tanpa uppercase untuk meta."
+      },
+      "figure": {
+        "displayName": "Angka Mesin",
+        "purpose": "Setiap rupiah, kode room, dan hitungan; selalu tabular agar digit tidak bergeser."
+      }
+    },
+    "shadows": [
+      {
+        "name": "board-cast",
+        "value": "0 24px 48px -12px rgb(0 0 0 / 0.65), 0 8px 16px -8px rgb(0 0 0 / 0.5)",
+        "purpose": "Bayangan papan ke dinding; hanya di bingkai kayu."
+      },
+      {
+        "name": "paper-contact",
+        "value": "0 1px 2px rgb(0 0 0 / 0.3), 0 10px 20px -8px rgb(0 0 0 / 0.5)",
+        "purpose": "Nota kertas dan blok aksi terisi: kontak tajam dekat benda, sebaran lembut di bawah."
+      },
+      {
+        "name": "press",
+        "value": "0 3px 10px -2px rgb(0 0 0 / 0.45)",
+        "purpose": "Keadaan diam tombol utama; hilang saat active."
+      },
+      {
+        "name": "frame-bevel",
+        "value": "inset 0 2px 3px rgb(243 239 228 / 0.14), inset 0 -3px 5px rgb(0 0 0 / 0.55)",
+        "purpose": "Pertemuan kayu dan batu tulis: tepi atas terang, tepi bawah gelap."
+      },
+      {
+        "name": "slate-recess",
+        "value": "inset 0 2px 10px rgb(0 0 0 / 0.55)",
+        "purpose": "Ceruk dalam permukaan tulis di tepi papan."
+      },
+      {
+        "name": "tray-ledge",
+        "value": "0 4px 8px -3px rgb(0 0 0 / 0.6)",
+        "purpose": "Laci kapur kecil yang menjorok di bawah bingkai."
+      }
+    ],
+    "motion": [
+      {
+        "name": "chalk-draw",
+        "value": "chalk-draw 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both",
+        "purpose": "Goresan kapur (garis bawah judul, lingkaran total) menulis dirinya via stroke-dashoffset."
+      },
+      {
+        "name": "bill-write",
+        "value": "bill-write 0.55s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "purpose": "Nota terbaru ditulis ke papan lewat wipe clip-path dari kiri, bukan fade seragam."
+      },
+      {
+        "name": "dust",
+        "value": "dust 0.5s ease-out both",
+        "purpose": "Debu kapur saat panel tambah tagihan terbuka."
+      },
+      {
+        "name": "state-transition",
+        "value": "150ms ease",
+        "purpose": "Hover dan fokus tombol, tautan, dan input."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Aksi utama di papan: isi kapur kuning, tinta batu tulis; satu-satunya tombol terisi di bloknya.",
+      "html": "<button class=\"ds-btn-primary\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M12 5v14\"/><path d=\"M5 12h14\"/></svg>Simpan Tagihan</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 20px; border: none; border-radius: 8px; background: var(--color-chalk-yellow, #e6c45c); color: var(--color-board-deep, #0e1714); font-family: var(--font-ui, system-ui, sans-serif); font-size: 16px; font-weight: 600; line-height: 1.4; box-shadow: 0 3px 10px -2px rgb(0 0 0 / 0.45); cursor: pointer; transition: background 150ms ease, box-shadow 150ms ease, transform 150ms ease; } .ds-btn-primary:hover { background: #f0d175; box-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 20px -8px rgb(0 0 0 / 0.5); } .ds-btn-primary:active { transform: translateY(1px); box-shadow: none; } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-chalk-yellow, #e6c45c); outline-offset: 2px; } .ds-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Aksi pendamping di papan: garis kapur tanpa isian, menguat saat hover.",
+      "html": "<button class=\"ds-btn-secondary\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"9\" y=\"9\" width=\"12\" height=\"12\" rx=\"2\"/><path d=\"M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1\"/></svg>Salin link</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 16px; border: 1px solid rgb(243 239 228 / 0.5); border-radius: 8px; background: transparent; color: var(--color-chalk, #f3efe4); font-family: var(--font-ui, system-ui, sans-serif); font-size: 16px; font-weight: 600; line-height: 1.4; cursor: pointer; transition: background 150ms ease, border-color 150ms ease, transform 150ms ease; } .ds-btn-secondary:hover { border-color: var(--color-chalk, #f3efe4); background: rgb(243 239 228 / 0.1); } .ds-btn-secondary:active { transform: translateY(1px); } .ds-btn-secondary:focus-visible { outline: 2px solid var(--color-chalk-yellow, #e6c45c); outline-offset: 2px; } .ds-btn-secondary:disabled { opacity: 0.6; cursor: not-allowed; }"
+    },
+    {
+      "name": "Paper Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger-paper",
+      "description": "Hapus di dalam nota: tinta oksida di atas kertas, berbalik menjadi isian penuh saat hover.",
+      "html": "<button class=\"ds-btn-danger-paper\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M6 6 18 18\"/><path d=\"M18 6 6 18\"/></svg>Hapus</button>",
+      "css": ".ds-btn-danger-paper { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; margin: -14px 0; padding: 4px 10px; border: 1px solid rgb(143 47 34 / 0.6); border-radius: 6px; background: rgb(143 47 34 / 0.05); color: #8f2f22; font-family: var(--font-ui, system-ui, sans-serif); font-size: 12px; font-weight: 600; line-height: 1.4; cursor: pointer; transition: background 150ms ease, border-color 150ms ease, color 150ms ease, transform 150ms ease; } .ds-btn-danger-paper:hover { border-color: #8f2f22; background: #8f2f22; color: var(--color-paper, #f5eeda); } .ds-btn-danger-paper:active { transform: translateY(1px); } .ds-btn-danger-paper:focus-visible { outline: 2px solid #8f2f22; outline-offset: 2px; } .ds-btn-danger-paper:disabled { opacity: 0.6; cursor: not-allowed; }"
+    },
+    {
+      "name": "Chalk Input",
+      "kind": "input",
+      "refersTo": "input-chalk",
+      "description": "Input di papan: kotak bergaris kapur di atas batu tulis dalam, fokus berpindah ke kuning.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Deskripsi</span><input class=\"ds-input-chalk\" type=\"text\" placeholder=\"Contoh: Makan malam di Warung Pak Kumis\" /></label>",
+      "css": ".ds-field { display: block; } .ds-field-label { display: block; margin-bottom: 6px; font-family: var(--font-ui, system-ui, sans-serif); font-size: 14px; font-weight: 500; letter-spacing: 0.025em; text-transform: uppercase; color: var(--color-chalk-dim, #b9c2ba); } .ds-input-chalk { width: 100%; padding: 10px 14px; border: 1px solid rgb(243 239 228 / 0.4); border-radius: 8px; background: var(--color-board-deep, #0e1714); color: var(--color-chalk, #f3efe4); font-family: var(--font-ui, system-ui, sans-serif); font-size: 16px; line-height: 1.5; outline: none; caret-color: var(--color-chalk-yellow, #e6c45c); transition: border-color 150ms ease, box-shadow 150ms ease; } .ds-input-chalk::placeholder { color: var(--color-chalk-dim, #b9c2ba); } .ds-input-chalk:hover { border-color: rgb(243 239 228 / 0.6); } .ds-input-chalk:focus { border-color: var(--color-chalk-yellow, #e6c45c); box-shadow: 0 0 0 2px rgb(230 196 92 / 0.7); } .ds-input-chalk:disabled { border-color: rgb(243 239 228 / 0.25); color: var(--color-chalk-dim, #b9c2ba); opacity: 0.7; cursor: not-allowed; }"
+    },
+    {
+      "name": "Paper Input",
+      "kind": "input",
+      "refersTo": "input-paper",
+      "description": "Input di dalam blok kuning: nota kertas kecil dengan tinta gelap di atas bidang kapur kuning.",
+      "html": "<label class=\"ds-field-paper\"><span class=\"ds-field-paper-label\">Nama room</span><input class=\"ds-input-paper\" type=\"text\" placeholder=\"Contoh: Makan Malam Sabtu\" /></label>",
+      "css": ".ds-field-paper { display: block; } .ds-field-paper-label { display: block; margin-bottom: 6px; font-family: var(--font-ui, system-ui, sans-serif); font-size: 14px; font-weight: 600; letter-spacing: 0.025em; text-transform: uppercase; color: #201c16; } .ds-input-paper { width: 100%; padding: 10px 14px; border: 1px solid rgb(32 28 22 / 0.4); border-radius: 8px; background: var(--color-paper, #f5eeda); color: var(--color-paper-ink, #201c16); font-family: var(--font-ui, system-ui, sans-serif); font-size: 16px; line-height: 1.5; outline: none; transition: border-color 150ms ease, box-shadow 150ms ease; } .ds-input-paper::placeholder { color: var(--color-paper-muted, #5a5245); } .ds-input-paper:focus { border-color: #201c16; box-shadow: 0 0 0 2px rgb(32 28 22 / 0.5); } .ds-input-paper:disabled { opacity: 0.7; cursor: not-allowed; }"
+    },
+    {
+      "name": "Paper Note",
+      "kind": "card",
+      "refersTo": "paper-note",
+      "description": "Nota tagihan ditempel di papan: kertas krem, tepi bawah sobek, pin kayu, sedikit miring.",
+      "html": "<article class=\"ds-note\"><span class=\"ds-note-pin\" aria-hidden=\"true\"></span><div class=\"ds-note-head\"><div><h3 class=\"ds-note-title\">Makan malam di Warung Pak Kumis</h3><p class=\"ds-note-meta\">Dibayar oleh <strong>Dika</strong> · 16 Nov 2026 · Merata</p></div><div class=\"ds-note-amount\"><span class=\"ds-note-figure\">Rp 480.000</span></div></div><ul class=\"ds-note-chips\"><li class=\"ds-chip-paper\"><strong>Dika</strong> <span class=\"ds-chip-figure\">Rp 120.000</span></li><li class=\"ds-chip-paper\"><strong>Sari</strong> <span class=\"ds-chip-figure\">Rp 120.000</span></li></ul></article>",
+      "css": ".ds-note { position: relative; padding: 16px 16px 32px; border-radius: 2px 2px 0 0; background-color: var(--color-paper, #f5eeda); background-image: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.13 0 0 0 0 0.11 0 0 0 0 0.08 0 0 0 0.08 0'/></filter><rect width='160' height='160' filter='url(%23p)'/></svg>\"); color: var(--color-paper-ink, #201c16); box-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 20px -8px rgb(0 0 0 / 0.5); transform: rotate(-1deg); -webkit-mask-image: linear-gradient(#000 0 0), url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='14' preserveAspectRatio='none'><path d='M0 2 L14 8 L30 3 L46 9 L62 4 L80 10 L96 3 L112 8 L128 4 L144 9 L160 3 L178 8 L200 2 L200 14 L0 14 Z' fill='%23000'/></svg>\"); mask-image: linear-gradient(#000 0 0), url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='14' preserveAspectRatio='none'><path d='M0 2 L14 8 L30 3 L46 9 L62 4 L80 10 L96 3 L112 8 L128 4 L144 9 L160 3 L178 8 L200 2 L200 14 L0 14 Z' fill='%23000'/></svg>\"); -webkit-mask-size: 100% calc(100% - 12px), 200px 12px; mask-size: 100% calc(100% - 12px), 200px 12px; -webkit-mask-position: top, bottom; mask-position: top, bottom; -webkit-mask-repeat: no-repeat, repeat-x; mask-repeat: no-repeat, repeat-x; } .ds-note-pin { position: absolute; top: -8px; left: 50%; width: 6px; height: 16px; transform: translateX(-50%); border-radius: 999px; background: var(--color-wood-dark, #3e2b1f); } .ds-note-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; } .ds-note-title { margin: 0; font-family: var(--font-chalk, \"Kalam\", cursive); font-size: 20px; line-height: 1.35; overflow-wrap: break-word; } .ds-note-meta { margin: 4px 0 0; font-family: var(--font-ui, system-ui, sans-serif); font-size: 12px; color: var(--color-paper-muted, #5a5245); } .ds-note-meta strong { color: var(--color-paper-ink, #201c16); font-weight: 600; } .ds-note-amount { flex-shrink: 0; } .ds-note-figure, .ds-chip-figure { font-family: var(--font-figure, ui-monospace, monospace); font-variant-numeric: tabular-nums; } .ds-note-figure { font-size: 18px; font-weight: 700; } .ds-note-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; padding: 0; list-style: none; } .ds-chip-paper { padding: 2px 8px; border: 1px solid rgb(90 82 69 / 0.4); border-radius: 2px; background: rgb(32 28 22 / 0.05); color: var(--color-paper-muted, #5a5245); font-family: var(--font-ui, system-ui, sans-serif); font-size: 12px; } .ds-chip-paper strong { color: var(--color-paper-ink, #201c16); font-weight: 500; } .ds-chip-figure { color: var(--color-paper-ink, #201c16); font-weight: 600; }"
+    },
+    {
+      "name": "Filled Action Block",
+      "kind": "card",
+      "refersTo": "action-block-filled",
+      "description": "Pintu \"Buat Room\": bidang kapur kuning penuh yang memiliki wilayahnya, dengan input nota di dalamnya.",
+      "html": "<section class=\"ds-block-filled\"><h2 class=\"ds-block-filled-title\">Buat Room</h2><p class=\"ds-block-filled-copy\">Kamu menjadi admin room dan bisa menghapus tagihan yang keliru.</p><label class=\"ds-block-filled-field\"><span class=\"ds-block-filled-label\">Nama room</span><input class=\"ds-block-filled-input\" type=\"text\" placeholder=\"Contoh: Makan Malam Sabtu\" /></label><button class=\"ds-block-filled-btn\">Buat Room</button></section>",
+      "css": ".ds-block-filled { padding: 20px; border: 2px solid var(--color-chalk-yellow, #e6c45c); border-radius: 12px; background: var(--color-chalk-yellow, #e6c45c); box-shadow: 0 3px 10px -2px rgb(0 0 0 / 0.45); } .ds-block-filled-title { margin: 0; font-family: var(--font-chalk, \"Kalam\", cursive); font-size: 24px; line-height: 1.25; color: #201c16; } .ds-block-filled-copy { margin: 4px 0 16px; font-family: var(--font-ui, system-ui, sans-serif); font-size: 14px; font-weight: 500; line-height: 1.5; color: #4a4234; } .ds-block-filled-field { display: block; margin-bottom: 14px; } .ds-block-filled-label { display: block; margin-bottom: 6px; font-family: var(--font-ui, system-ui, sans-serif); font-size: 14px; font-weight: 600; letter-spacing: 0.025em; text-transform: uppercase; color: #201c16; } .ds-block-filled-input { width: 100%; padding: 10px 14px; border: 1px solid rgb(32 28 22 / 0.4); border-radius: 8px; background: var(--color-paper, #f5eeda); color: var(--color-paper-ink, #201c16); font-family: var(--font-ui, system-ui, sans-serif); font-size: 16px; outline: none; } .ds-block-filled-input::placeholder { color: var(--color-paper-muted, #5a5245); } .ds-block-filled-input:focus { border-color: #201c16; box-shadow: 0 0 0 2px rgb(32 28 22 / 0.5); } .ds-block-filled-btn { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 44px; padding: 10px 20px; border: 2px solid #201c16; border-radius: 8px; background: var(--color-chalk-yellow, #e6c45c); color: #201c16; font-family: var(--font-ui, system-ui, sans-serif); font-size: 16px; font-weight: 700; cursor: pointer; transition: background 150ms ease, transform 150ms ease; } .ds-block-filled-btn:hover { background: #f0d175; } .ds-block-filled-btn:active { transform: translateY(1px); } .ds-block-filled-btn:focus-visible { outline: 2px solid #201c16; outline-offset: 2px; }"
+    },
+    {
+      "name": "Outline Action Block",
+      "kind": "card",
+      "refersTo": "action-block-outline",
+      "description": "Pintu \"Gabung\": garis kapur di atas batu tulis, tanpa isian, sengaja lebih ringan dari blok kuning.",
+      "html": "<section class=\"ds-block-outline\"><h2 class=\"ds-block-outline-title\">Gabung</h2><p class=\"ds-block-outline-copy\">Punya kode dari teman? Masukkan kode dan namamu di sini.</p><label class=\"ds-block-outline-field\"><span class=\"ds-block-outline-label\">Kode room</span><input class=\"ds-block-outline-input\" type=\"text\" placeholder=\"KODE ROOM\" /></label><button class=\"ds-block-outline-btn\">Gabung Room</button></section>",
+      "css": ".ds-block-outline { padding: 20px; border: 2px solid rgb(243 239 228 / 0.5); border-radius: 12px; background: transparent; } .ds-block-outline-title { margin: 0; font-family: var(--font-chalk, \"Kalam\", cursive); font-size: 24px; line-height: 1.25; color: var(--color-chalk, #f3efe4); } .ds-block-outline-copy { margin: 4px 0 16px; font-family: var(--font-ui, system-ui, sans-serif); font-size: 14px; line-height: 1.5; color: var(--color-chalk-dim, #b9c2ba); } .ds-block-outline-field { display: block; margin-bottom: 14px; } .ds-block-outline-label { display: block; margin-bottom: 6px; font-family: var(--font-ui, system-ui, sans-serif); font-size: 14px; font-weight: 500; letter-spacing: 0.025em; text-transform: uppercase; color: var(--color-chalk-dim, #b9c2ba); } .ds-block-outline-input { width: 100%; padding: 10px 14px; border: 1px solid rgb(243 239 228 / 0.4); border-radius: 8px; background: var(--color-board-deep, #0e1714); color: var(--color-chalk, #f3efe4); font-family: var(--font-figure, ui-monospace, monospace); font-variant-numeric: tabular-nums; font-size: 16px; letter-spacing: 0.2em; text-transform: uppercase; outline: none; } .ds-block-outline-input::placeholder { color: var(--color-chalk-dim, #b9c2ba); letter-spacing: 0.2em; } .ds-block-outline-input:focus { border-color: var(--color-chalk-yellow, #e6c45c); box-shadow: 0 0 0 2px rgb(230 196 92 / 0.7); } .ds-block-outline-btn { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 44px; padding: 10px 20px; border: none; border-radius: 8px; background: var(--color-chalk-yellow, #e6c45c); color: var(--color-board-deep, #0e1714); font-family: var(--font-ui, system-ui, sans-serif); font-size: 16px; font-weight: 600; cursor: pointer; transition: background 150ms ease, transform 150ms ease; } .ds-block-outline-btn:hover { background: #f0d175; } .ds-block-outline-btn:active { transform: translateY(1px); } .ds-block-outline-btn:focus-visible { outline: 2px solid var(--color-chalk-yellow, #e6c45c); outline-offset: 2px; }"
+    },
+    {
+      "name": "Chalk Arrow Route",
+      "kind": "custom",
+      "description": "Baris rute transfer: nama, panah kapur melengkung, nama penerima, nominal mono kuning.",
+      "html": "<div class=\"ds-route\"><span class=\"ds-route-name\">Budi</span><svg class=\"ds-route-arrow\" viewBox=\"0 0 80 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 16c14-10 34-12 52-6\"/><path d=\"m49 4 8 6-8 6\"/></svg><span class=\"ds-route-name\">Dika</span><span class=\"ds-route-amount\">Rp 187.000</span></div>",
+      "css": ".ds-route { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; padding: 14px 16px; border: 1px solid rgb(243 239 228 / 0.2); border-radius: 8px; background: var(--color-board-deep, #0e1714); color: var(--color-chalk, #f3efe4); font-family: var(--font-ui, system-ui, sans-serif); font-size: 14px; } .ds-route-name { min-width: 0; font-weight: 600; overflow-wrap: break-word; } .ds-route-arrow { width: 56px; height: 24px; flex-shrink: 0; color: var(--color-chalk-yellow, #e6c45c); } .ds-route-amount { margin-left: auto; flex-shrink: 0; font-family: var(--font-figure, ui-monospace, monospace); font-variant-numeric: tabular-nums; font-size: 18px; font-weight: 700; color: var(--color-chalk-yellow, #e6c45c); }"
+    },
+    {
+      "name": "Sticky Add-Bill Bar",
+      "kind": "nav",
+      "description": "Bilah bawah mobile: kapsul kuning selebar kontainer, membuka dan menggulir ke panel tagihan.",
+      "html": "<div class=\"ds-sticky-wrap\"><a class=\"ds-sticky\" href=\"#tambah-tagihan\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M12 5v14\"/><path d=\"M5 12h14\"/></svg>Tambah Tagihan</a></div>",
+      "css": ".ds-sticky-wrap { position: fixed; inset: 0 0 0 0; top: auto; z-index: 30; padding: 12px 12px max(12px, env(safe-area-inset-bottom)); pointer-events: none; } .ds-sticky { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; max-width: 448px; min-height: 48px; margin: 0 auto; padding: 12px 20px; border-radius: 999px; background: var(--color-chalk-yellow, #e6c45c); color: var(--color-board-deep, #0e1714); font-family: var(--font-ui, system-ui, sans-serif); font-size: 16px; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 20px -8px rgb(0 0 0 / 0.5); pointer-events: auto; transition: transform 150ms ease; } .ds-sticky:active { transform: translateY(1px); } .ds-sticky:focus-visible { outline: 2px solid var(--color-chalk, #f3efe4); outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Papan Tulis Warung",
+    "overview": "Aplikasi ini bukan dasbor. Ia satu papan tulis warung yang dipakai bersama di atas meja: hijau-hitam berdebu kapur, berbingkai kayu hangat, dengan nota kertas krem ditempel miring di permukaannya. Semua yang penting ditulis dan dilingkari tangan; semua yang dihitung dicetak rapi dalam angka mono. Papan itu sendiri adalah satu-satunya benda — tidak ada grid kartu, tidak ada panel putih mengambang, tidak ada dekorasi yang tidak membawa uang.\n\nKepadatan mengikuti meja yang sesak tapi tertata: kelompok rapat di dalam satu baris, jarak lega antar blok. Kontras dibawa oleh material (kapur di atas batu tulis, tinta di atas kertas), bukan oleh bayangan. Gerak hanya satu: kapur yang menulis — garis bawah, lingkaran total, dan baris nota baru. Semua konten terlihat penuh tanpa animasi.\n\nSistem menolak tiga hal secara sadar: kartu SaaS putih sederajat dengan sudut membulat seragam, gradien teks dan kilau dekoratif, serta dialog browser asli sebagai satu-satunya permukaan asing di dalam dunia ini.",
+    "keyCharacteristics": [
+      "Satu papan berbingkai kayu sebagai kanvas seluruh halaman.",
+      "Uang selalu dirender mono tabular dan sering dilingkari; teks naratif tidak pernah memakai font angka.",
+      "Kuning = uang yang diterima dan aksi utama; merah = utang dan hapus; keduanya selalu disertai tanda atau label, tidak pernah warna saja.",
+      "Kertas adalah material kedua: nota tagihan, contoh struk, dan sobekan konfirmasi.",
+      "Tepi kertas sobek di bawah, bersih dan berpin kayu di atas.",
+      "Nol gambar raster; semua tekstur digambar di CSS/SVG."
+    ],
+    "rules": [
+      {
+        "name": "The Two Reds Rule",
+        "body": "Kapur merah hanya hidup di atas papan; merah kertas hanya hidup di atas kertas. Tidak pernah ditukar, tidak pernah dipakai bersama di satu bidang.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tinted Secondary Rule",
+        "body": "Teks sekunder di papan diturunkan dari kapur (chalk-dim, chalk-faint), dan di atas kertas diturunkan dari tinta (paper-muted). Tidak ada abu-abu netral di dunia ini.",
+        "section": "colors"
+      },
+      {
+        "name": "The Money Is Yellow Rule",
+        "body": "Kuning menandai uang yang diterima atau aksi utama, dan hanya itu. Kalau sebuah elemen kuning tidak berarti salah satunya, warnanya salah.",
+        "section": "colors"
+      },
+      {
+        "name": "The Figures Are Mono Rule",
+        "body": "Setiap rupiah, kode room, dan jumlah memakai Geist Mono dengan tabular-nums. Kalam tidak pernah merender digit uang; Figtree tidak pernah merender nominal.",
+        "section": "typography"
+      },
+      {
+        "name": "The Chalk Hand Is Big Rule",
+        "body": "Tulisan tangan hanya dipakai pada ukuran judul (≥1.5rem). Kalam di ukuran label terbaca sebagai kesalahan render, bukan sebagai tulisan tangan.",
+        "section": "typography"
+      },
+      {
+        "name": "The Physical Board Rule",
+        "body": "Setiap bayangan harus punya offset dan blur, dan harus bisa dijelaskan sebagai benda yang lebih dekat ke mata. Halo berwarna beroffset nol bukan kedalaman — itu dekorasi, dan dihapus.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Pin Rule",
+        "body": "Kertas tidak pernah melayang. Nota selalu punya pin kayu di tepi atas dan bayangan kontak pendek.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Gradient Stop Rule",
+        "body": "Kayu tidak pernah berupa satu warna datar: setiap permukaan kayu adalah gradien tiga stop (wood-light → wood → wood-dark atau wood-light → wood-mid → kayu lebih gelap). Satu warna kayu datar membaca sebagai plastik cokelat.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Outline First Rule",
+        "body": "Di papan, bentuk default adalah garis kapur di atas batu tulis. Isian penuh menandai aksi atau uang, tidak pernah menandai wadah biasa.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Torn Bottom Rule",
+        "body": "Kertas hanya disobek di tepi bawah. Tepi atas selalu bersih karena di sana ada pin; sobekan di atas akan membaca sebagai kertas rusak, bukan kertas ditempel.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do render setiap nominal rupiah, kode room, dan hitungan dalam Geist Mono tabular — tanda plus/minus tidak boleh menggeser digit.",
+      "Do turunkan teks sekunder dari materialnya: chalk-dim/chalk-faint di papan, paper-muted di kertas.",
+      "Do lingkari angka total dengan goresan tangan yang digambar ulang saat nilainya berubah.",
+      "Do pakai dua material saja — batu tulis dan kertas — dan jelaskan setiap elemen sebagai salah satunya.",
+      "Do jaga target sentuh ≥44px, termasuk tautan teks kecil dan tombol hapus di dalam nota.",
+      "Do biarkan konten terlihat penuh tanpa animasi; animasi hanya menambah goresan kapur di atas konten yang sudah ada.",
+      "Do menulis semua teks UI dalam Bahasa Indonesia dengan nada santai dan jelas."
+    ],
+    "donts": [
+      "Don't memakai kartu putih SaaS, grid kartu sederajat, atau panel mengambang dengan sudut membulat seragam.",
+      "Don't memakai kapur merah di atas kertas atau tinta oksida di atas papan.",
+      "Don't memakai gradien teks, emoji sebagai ikon, badge kicker di atas judul, kaca/blur dekoratif, atau garis kiri berwarna.",
+      "Don't memakai bayangan beroffset nol atau halo berwarna sebagai kedalaman.",
+      "Don't membungkus angka uang dalam Kalam atau teks naratif dalam Geist Mono.",
+      "Don't memunculkan dialog browser asli (alert, confirm, prompt) sebagai satu-satunya permukaan asing di dalam dunia ini.",
+      "Don't menyembunyikan konten di balik animasi masuk; pengguna dengan prefers-reduced-motion harus melihat hasil yang sama persis.",
+      "Don't memakai bahasa Inggris, tanda seru pemasaran, atau klaim yang tidak ada buktinya di UI."
+    ]
+  }
+}

@@ -38,3 +38,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# impeccable: state lokal & screenshot bukti, tidak di-commit
+/.impeccable/questions/
+/.impeccable/review/

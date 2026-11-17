@@ -1,0 +1,133 @@
+{
+  "title": "Pilih dunia visual",
+  "question": "Roll menetapkan Papan Tulis Warung. Pertahankan, ambil alternatif, atau re-roll.",
+  "buildPath": { "value": "code", "toggle": false },
+  "canon": true,
+  "steer": true,
+  "reroll": { "registers": ["safer", "bolder"] },
+  "options": [
+    {
+      "id": "assigned",
+      "kind": "assigned",
+      "label": "Papan Tulis Warung",
+      "kicker": "THE ROLL",
+      "lineage": "papan menu warung & tulis-tangan kapur",
+      "thesis": "Aplikasi ini adalah satu papan tulis bersama di meja warung: semua angka ditulis, dilingkari, dan dihitung di tempat.",
+      "palette": ["#16211d", "#f3efe4", "#e6c45c", "#5a4130"],
+      "materials": ["batu tulis", "debu kapur", "bingkai kayu"],
+      "viewport": "Papan penuh dengan bingkai kayu; nama room ditulis kapur besar, kode room dalam kotak kapur, dan angka utama dilingkari tangan.",
+      "risk": "UI gelap dekat klise AI; tulisan tangan bisa mengorbankan keterbacaan nominal jika lapisan angka tidak tegas.",
+      "raised": [
+        { "from": "wildstyle blackbook", "raise": "Versi cepat di samping: setiap layar punya bacaan ringkas untuk dilihat sekilas dan versi rinci saat dibutuhkan." },
+        { "from": "busytown cross-section", "raise": "Label berpointer: setiap nominal bisa ditunjuk ke tagihan asalnya lewat garis tipis." },
+        { "from": "drum-machine step row", "raise": "Baris tunggal tak terputus: alur uang dibaca sebagai satu baris kontinu dengan penanda posisi aktif." }
+      ]
+    },
+    {
+      "id": "model-pick",
+      "kind": "pick",
+      "label": "Nota Warung",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "struk thermal & nota kasir",
+      "thesis": "Tagihan itu sendiri jadi antarmuka: satu nota panjang yang tumbuh setiap kali ada pengeluaran, dengan kolom angka yang tak bisa salah baca.",
+      "palette": ["#f7f4ec", "#161614", "#8a867c", "#c2452f"],
+      "materials": ["kertas thermal", "tinta dot-matrix", "cap karet"],
+      "viewport": "Satu lembar nota selebar layar, judul bergaya kasir, kode room sebagai nomor nota, dan total yang digarisbawahi ganda.",
+      "risk": "Arah paling mudah ditebak untuk produk split bill; tanpa craft tinggi langsung terasa kostum."
+    },
+    {
+      "id": "challenger-bbs",
+      "kind": "challenger",
+      "catalogId": "medium-native-ansi-bbs-nightboard",
+      "label": "Nightboard BBS 2 A.M.",
+      "kicker": "CHALLENGER",
+      "verdict": "competitive",
+      "lineage": "bulletin board ANSI & layar teks modem",
+      "thesis": "Room terasa seperti papan malam: layar teks bernomor, kehadiran anggota terasa langsung, semua bisa dioperasikan dari keyboard.",
+      "palette": ["#05070a", "#22d3ee", "#e879f9", "#fefefe"],
+      "materials": ["terminal black", "block glyph", "box-drawing"],
+      "viewport": "Layar 80 kolom dengan judul blok cyan di atas menu bernomor; daftar anggota dan saldo adalah baris teks yang hidup.",
+      "case": "Menang di kejelasan teks dan kehadiran langsung; kalah telak di identifikasi audiens karena estetika subkultur internet lama.",
+      "risk": "Retro-novelty yang sulit dibaca di HP dan mengasingkan pengguna awam."
+    },
+    {
+      "id": "declined-alphabet",
+      "kind": "challenger",
+      "catalogId": "dream-surreal-impossible-worlds-alphabet-storm",
+      "label": "Badai Alfabet",
+      "verdict": "declined",
+      "lineage": "tipografi surealis sebagai cuaca",
+      "thesis": "Huruf mengembun jadi kata, pecah jadi cuaca, dan membentuk lanskap.",
+      "palette": ["#ffffff", "#111111", "#b8bcc4", "#c9ccd2"],
+      "materials": ["partikel huruf", "tinta badai", "kilat perak"],
+      "viewport": "Kata besar di tengah bidang putih, kerning meregang seperti angin, hujan huruf turun ke bawah lipatan.",
+      "risk": "Abstrak; tidak punya hubungan dengan uang atau kelompok.",
+      "kept": "Tipografi sebagai materi: judul diperlakukan sebagai objek yang menempati bidang."
+    },
+    {
+      "id": "declined-accretion",
+      "kind": "challenger",
+      "catalogId": "galaxies-nebulae-deep-time-accretion-disk-threshold",
+      "label": "Cakram Akresi",
+      "verdict": "declined",
+      "lineage": "visualisasi lubang hitam & ambang waktu",
+      "thesis": "Materi berputar menuju ambang yang tidak bisa kembali.",
+      "palette": ["#000000", "#cfe4ff", "#ff6b4a", "#d4a94a"],
+      "materials": ["cahaya cakram", "cincin foton", "void"],
+      "viewport": "Cincin cahaya biru-putih melengkung di atas hitam, satu fragmen memerah dan hilang di horizon.",
+      "risk": "Spektakel luar angkasa mengalahkan angka yang harus dibaca.",
+      "kept": "Ambang tak-balik: status tagihan punya posisi visual yang tidak bisa disamarkan."
+    },
+    {
+      "id": "declined-drum",
+      "kind": "challenger",
+      "catalogId": "signals-instruments-drum-machine-step-row",
+      "label": "Step Row Drum Machine",
+      "verdict": "declined",
+      "lineage": "mesin ritme awal 80-an",
+      "thesis": "Enam belas tombol warna dalam satu baris, chase light menunjukkan posisi sekarang.",
+      "palette": ["#1c1c1e", "#e8433a", "#f08a2c", "#f2c94c", "#f5f5f5"],
+      "materials": ["panel charcoal", "LED", "silkscreen"],
+      "viewport": "Satu baris enam belas tombol selebar panel, readout tempo merah di atas, label kaps kecil di tiap baris.",
+      "risk": "Kosakata alat musik, bukan uang; warna candy mengalahkan nominal.",
+      "kept": "Baris tunggal tak terputus yang menandai posisi aktif."
+    },
+    {
+      "id": "declined-wildstyle",
+      "kind": "challenger",
+      "catalogId": "vernacular-ephemera-wildstyle-blackbook-page",
+      "label": "Blackbook Wildstyle",
+      "verdict": "declined",
+      "lineage": "buku sketsa marker & wildstyle",
+      "thesis": "Nama dijalin sampai hanya bisa dibaca oleh yang sudah tahu.",
+      "palette": ["#f1e8d4", "#151515", "#e0443c", "#3b6fd4"],
+      "materials": ["marker", "kertas krem", "keyline hitam"],
+      "viewport": "Lima huruf saling mengunci memenuhi halaman, panah keluar dari blok, versi throw-up kecil di sudut.",
+      "risk": "Sengaja sulit dibaca; bertentangan dengan kejelasan nominal.",
+      "kept": "Versi cepat di samping: ringkasan sekejap dan detail saat dibutuhkan."
+    },
+    {
+      "id": "declined-busytown",
+      "kind": "challenger",
+      "catalogId": "graphic-worlds-publishing-busytown-cross-section",
+      "label": "Busytown Cross-Section",
+      "verdict": "declined",
+      "lineage": "buku potongan rumah bergambar gouache",
+      "thesis": "Dunia terbuka: tiap bangunan kehilangan dindingnya dan setiap benda punya label.",
+      "palette": ["#faf6ec", "#b43a2e", "#efb52a", "#3f8a4f"],
+      "materials": ["gouache", "garis cokelat tipis", "label cetak"],
+      "viewport": "Satu adegan menyambung dari tepi ke tepi, rumah terbuka, pekerja di tengah tugas, label kecil berpointer.",
+      "risk": "Ramai dan kekanak-kanakan untuk keputusan uang.",
+      "kept": "Label berpointer: nominal menunjuk balik ke tagihan asalnya."
+    }
+  ],
+  "canonCard": {
+    "kind": "canon",
+    "label": "Standar kategori",
+    "thesis": "Apa yang biasanya dikirim kategori ini, dikerjakan dengan rapi: kartu putih, aksen indigo, sans-serif, mockup produk.",
+    "palette": ["#ffffff", "#111827", "#2563eb"],
+    "materials": ["grid bersih", "fotografi produk"],
+    "viewport": "Headline di tengah, subcopy, dua kartu aksi sederajat, dan deretan kartu fitur di bawahnya.",
+    "risk": "Tidak bisa dibedakan dari kompetitor, memang begitu desainnya."
+  }
+}
