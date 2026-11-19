@@ -22,7 +22,10 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
-  title: "Split Bill",
+  title: {
+    default: "Paronan",
+    template: "%s · Paronan",
+  },
   description: "Bagi tagihan bareng, tanpa ribet.",
 };
 

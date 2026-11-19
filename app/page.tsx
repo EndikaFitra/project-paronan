@@ -92,12 +92,12 @@ export default function Home() {
     <main className="mx-auto flex min-h-dvh w-full max-w-6xl items-center px-3 py-6 sm:px-6 sm:py-10">
       <BoardFrame className="w-full">
         <div className="grid grid-cols-1 gap-10 px-5 py-8 sm:px-8 sm:py-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12 lg:px-12 lg:py-14">
-          <section aria-labelledby="split-bill-title" className="min-w-0">
+          <section aria-labelledby="paronan-title" className="min-w-0">
             <h1
-              id="split-bill-title"
+              id="paronan-title"
               className="font-chalk text-6xl font-bold leading-none text-chalk sm:text-7xl lg:text-8xl"
             >
-              Split Bill
+              Paronan
             </h1>
             <ChalkUnderline className="max-w-[280px] sm:max-w-sm" />
             <p className="mt-6 max-w-[38ch] text-base text-chalk-dim sm:text-lg">

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Paronan">
+  <rect width="64" height="64" rx="14" fill="#16211d"/>
+  <path d="M31 14a18 18 0 0 0 0 36z" fill="#e6c45c" transform="translate(-2.5 0)"/>
+  <path d="M33 14a18 18 0 0 1 0 36z" fill="#e6c45c" transform="translate(2.5 0)"/>
+</svg>
