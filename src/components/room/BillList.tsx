@@ -16,6 +16,7 @@ import {
 } from "@/src/components/styles";
 import { Spinner } from "@/src/components/Spinner";
 import { XIcon } from "@/src/components/icons";
+import { BillEditForm } from "@/src/components/room/BillEditForm";
 
 interface BillListProps {
   room: RoomSummary;
@@ -109,9 +110,15 @@ export function BillList({ room, isAdmin }: BillListProps) {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const deleteTriggerRefs = useRef<Record<string, HTMLButtonElement | null>>(
     {},
   );
+  const editTriggerRefs = useRef<Record<string, HTMLButtonElement | null>>(
+    {},
+  );
+  // Fokus dipulihkan ke pemicu "Ubah" setelah form tertutup.
+  const pendingEditFocusId = useRef<string | null>(null);
   // Tombol pemicu di-unmount selama slip konfirmasi terbuka, jadi fokusnya
   // dikembalikan setelah render ulang, bukan saat state masih berubah.
   const pendingFocusId = useRef<string | null>(null);
@@ -154,6 +161,38 @@ export function BillList({ room, isAdmin }: BillListProps) {
       trigger.focus();
     }
   }, [confirmingId]);
+
+  // Bila nota dihapus dari daftar saat form ubahnya terbuka, tutup form.
+  useEffect(() => {
+    if (
+      editingId !== null &&
+      !room.bills.some((bill) => bill.id === editingId)
+    ) {
+      setEditingId(null);
+    }
+  }, [room.bills, editingId]);
+
+  // Setelah form ubah tertutup, pulihkan fokus ke pemicu "Ubah".
+  useEffect(() => {
+    const id = pendingEditFocusId.current;
+    if (!id || editingId === id) return;
+    const trigger = editTriggerRefs.current[id];
+    if (trigger) {
+      pendingEditFocusId.current = null;
+      trigger.focus();
+    }
+  }, [editingId]);
+
+  function openEdit(billId: string) {
+    // Hanya satu nota yang boleh dalam mode ubah; buka ubah menutup hapus.
+    setConfirmingId(null);
+    setEditingId(billId);
+  }
+
+  function closeEdit(billId: string) {
+    pendingEditFocusId.current = billId;
+    setEditingId((current) => (current === billId ? null : current));
+  }
 
   async function handleDelete(bill: Bill) {
     if (deletingId) return;
@@ -214,82 +253,119 @@ export function BillList({ room, isAdmin }: BillListProps) {
           {room.bills.map((bill, index) => {
             const isNewest = bill.id === lastAddedId && index === room.bills.length - 1;
             const confirming = confirmingId === bill.id;
+            const editing = editingId === bill.id;
             return (
               <li
                 key={bill.id}
                 className={`paper-grain paper-torn relative rounded-t-sm bg-paper px-4 pt-4 pb-8 text-paper-ink shadow-paper ${
-                  index % 2 === 0 ? "-rotate-1" : "rotate-1"
-                } ${isNewest ? "bill-write" : ""}`}
+                  editing ? "sm:col-span-2" : ""
+                } ${index % 2 === 0 ? "-rotate-1" : "rotate-1"} ${isNewest ? "bill-write" : ""}`}
                 style={{ animationDelay: isNewest ? "0.05s" : undefined }}
               >
                 <div
                   aria-hidden
                   className="absolute -top-2 left-1/2 h-4 w-1.5 -translate-x-1/2 rounded-full bg-wood-dark"
                 />
-                <div className="flex items-start justify-between gap-3">
+                {editing ? (
                   <div className="min-w-0">
-                    <h3 className="font-chalk break-words text-xl leading-snug text-paper-ink">
-                      {bill.description}
+                    <h3 className="font-chalk text-lg text-paper-ink">
+                      Ubah tagihan
                     </h3>
-                    <p className="mt-1 text-xs text-paper-muted">
-                      Dibayar oleh{" "}
-                      <span className="font-semibold text-paper-ink">
-                        {bill.payerName}
-                      </span>{" "}
-                      · {formatTanggal(bill.createdAt)} ·{" "}
-                      {bill.splitMode === "EQUALS" ? "Merata" : "Sesuai porsi"}
-                    </p>
-                  </div>
-                  <div className="flex shrink-0 flex-col items-end gap-2">
-                    <span className="tnum text-lg font-bold text-paper-ink">
-                      {formatRupiah(bill.amount)}
-                    </span>
-                    {isAdmin && !confirming ? (
-                      <button
-                        ref={(node) => {
-                          deleteTriggerRefs.current[bill.id] = node;
-                        }}
-                        type="button"
-                        onClick={() => setConfirmingId(bill.id)}
-                        disabled={deletingId !== null}
-                        className={`${paperDangerButtonClass} -my-3.5 min-h-11`}
-                      >
-                        <XIcon />
-                        Hapus
-                      </button>
-                    ) : null}
-                  </div>
-                </div>
-
-                <ul className="mt-3 flex flex-wrap gap-1.5">
-                  {bill.splits.map((split) => (
-                    <li
-                      key={split.memberId}
-                      className={paperChipClass}
-                    >
-                      <span className="font-medium text-paper-ink">
-                        {nameById.get(split.memberId) ?? "Anggota"}
-                      </span>{" "}
-                      <span className="tnum font-semibold text-paper-ink">
-                        {formatRupiah(split.amount)}
-                      </span>
-                      {bill.splitMode === "SHARES" ? (
-                        <span> ({split.shares} porsi)</span>
-                      ) : null}
-                    </li>
-                  ))}
-                </ul>
-
-                {confirming ? (
-                  <div className="mt-3">
-                    <DeleteConfirm
+                    <BillEditForm
+                      room={room}
                       bill={bill}
-                      deleting={deletingId === bill.id}
-                      onConfirm={() => handleDelete(bill)}
-                      onCancel={() => closeConfirm(bill.id)}
+                      onCancel={() => closeEdit(bill.id)}
                     />
                   </div>
-                ) : null}
+                ) : (
+                  <>
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <h3 className="font-chalk break-words text-xl leading-snug text-paper-ink">
+                          {bill.description}
+                        </h3>
+                        <p className="mt-1 text-xs text-paper-muted">
+                          Dibayar oleh{" "}
+                          <span className="font-semibold text-paper-ink">
+                            {bill.payerName}
+                          </span>{" "}
+                          · {formatTanggal(bill.createdAt)} ·{" "}
+                          {bill.splitMode === "EQUALS" ? "Merata" : "Sesuai porsi"}
+                        </p>
+                      </div>
+                      <div className="flex shrink-0 flex-col items-end gap-2">
+                        <span className="tnum text-lg font-bold text-paper-ink">
+                          {formatRupiah(bill.amount)}
+                        </span>
+                        {isAdmin && !confirming ? (
+                          <div className="flex items-center gap-2">
+                            <button
+                              ref={(node) => {
+                                editTriggerRefs.current[bill.id] = node;
+                              }}
+                              type="button"
+                              onClick={() => {
+                                // Buka ubah menutup slip hapus lain.
+                                setConfirmingId(null);
+                                openEdit(bill.id);
+                              }}
+                              disabled={deletingId !== null}
+                              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-md border border-[#5a5245]/50 bg-[#201c16]/5 px-3 py-1 text-xs font-semibold text-paper-ink transition hover:border-paper-ink hover:bg-[#201c16]/10 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60"
+                            >
+                              Ubah
+                            </button>
+                            <button
+                              ref={(node) => {
+                                deleteTriggerRefs.current[bill.id] = node;
+                              }}
+                              type="button"
+                              onClick={() => {
+                                // Buka hapus menutup form ubah.
+                                setEditingId(null);
+                                setConfirmingId(bill.id);
+                              }}
+                              disabled={deletingId !== null}
+                              className={`${paperDangerButtonClass} -my-3.5 min-h-11`}
+                            >
+                              <XIcon />
+                              Hapus
+                            </button>
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <ul className="mt-3 flex flex-wrap gap-1.5">
+                      {bill.splits.map((split) => (
+                        <li
+                          key={split.memberId}
+                          className={paperChipClass}
+                        >
+                          <span className="font-medium text-paper-ink">
+                            {nameById.get(split.memberId) ?? "Anggota"}
+                          </span>{" "}
+                          <span className="tnum font-semibold text-paper-ink">
+                            {formatRupiah(split.amount)}
+                          </span>
+                          {bill.splitMode === "SHARES" ? (
+                            <span> ({split.shares} porsi)</span>
+                          ) : null}
+                        </li>
+                      ))}
+                    </ul>
+
+                    {confirming ? (
+                      <div className="mt-3">
+                        <DeleteConfirm
+                          bill={bill}
+                          deleting={deletingId === bill.id}
+                          onConfirm={() => handleDelete(bill)}
+                          onCancel={() => closeConfirm(bill.id)}
+                        />
+                      </div>
+                    ) : null}
+                  </>
+                )}
               </li>
             );
           })}

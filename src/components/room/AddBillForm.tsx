@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useId, useMemo, useState } from "react";
+import { useId, useState } from "react";
 import type { FormEvent } from "react";
 
 import type { RoomSummary } from "@/src/lib/api";
@@ -9,7 +9,8 @@ import {
   NETWORK_ERROR_MESSAGE,
   readApiResponse,
 } from "@/src/lib/client-api";
-import { formatRupiahInput, parseRupiahInput } from "@/src/lib/format";
+import { formatRupiahInput } from "@/src/lib/format";
+import { useBillDraft } from "@/src/lib/use-bill-draft";
 import {
   errorTextClass,
   inputClass,
@@ -21,8 +22,6 @@ import { Spinner } from "@/src/components/Spinner";
 import { PlusIcon } from "@/src/components/icons";
 
 const MAX_DESCRIPTION_LENGTH = 100;
-
-type SplitMode = "EQUALS" | "SHARES";
 
 interface AddBillFormProps {
   room: RoomSummary;
@@ -40,76 +39,33 @@ export function AddBillForm({ room, currentMemberId }: AddBillFormProps) {
       ? currentMemberId
       : (memberIds[0] ?? "");
 
+  const {
+    description,
+    setDescription,
+    amount,
+    amountDigits,
+    handleAmountChange,
+    payerId,
+    handlePayerChange,
+    mode,
+    setMode,
+    isSelected,
+    shares,
+    setShares,
+    toggleParticipant,
+    participants,
+    reset: resetDraft,
+    validate,
+    buildPayload,
+  } = useBillDraft({ members: room.members, defaultPayerId });
+
   const [open, setOpen] = useState(false);
-  const [description, setDescription] = useState("");
-  const [amountDigits, setAmountDigits] = useState("");
-  const [payerId, setPayerId] = useState(defaultPayerId);
-  const [mode, setMode] = useState<SplitMode>("EQUALS");
-  const [selected, setSelected] = useState<Record<string, boolean>>(() =>
-    Object.fromEntries(memberIds.map((id) => [id, true])),
-  );
-  const [shares, setShares] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  // Anggota baru yang masuk saat form terbuka otomatis ikut terpilih.
-  const isSelected = (memberId: string) => selected[memberId] ?? true;
-
-  const participants = useMemo(
-    () => room.members.filter((member) => selected[member.id] ?? true),
-    [room.members, selected],
-  );
-  const amount = amountDigits ? Number(amountDigits) : 0;
-
-  function handleAmountChange(value: string) {
-    // Simpan hanya digit, maksimal 12 digit (sampai 999 miliar rupiah).
-    const digits = value
-      .replace(/\D/g, "")
-      .replace(/^0+(?=\d)/, "")
-      .slice(0, 12);
-    setAmountDigits(digits);
-  }
-
-  function toggleParticipant(memberId: string) {
-    if (memberId === payerId) return; // Pembayar wajib ikut menanggung.
-    setSelected((current) => ({
-      ...current,
-      [memberId]: !(current[memberId] ?? true),
-    }));
-  }
-
-  function handlePayerChange(nextPayerId: string) {
-    setPayerId(nextPayerId);
-    setSelected((current) => ({ ...current, [nextPayerId]: true }));
-  }
-
   function resetForm() {
-    setDescription("");
-    setAmountDigits("");
-    setMode("EQUALS");
-    setSelected(Object.fromEntries(memberIds.map((id) => [id, true])));
-    setShares({});
+    resetDraft();
     setError(null);
-  }
-
-  function validate(): string | null {
-    if (!description.trim()) return "Deskripsi tagihan wajib diisi.";
-    if (amount <= 0) return "Nominal tagihan harus lebih dari 0.";
-    if (participants.length === 0) {
-      return "Pilih minimal satu peserta yang ikut menanggung tagihan.";
-    }
-    if (!isSelected(payerId)) {
-      return "Pembayar harus termasuk peserta yang ikut menanggung tagihan.";
-    }
-    if (mode === "SHARES") {
-      for (const member of participants) {
-        const value = Number(shares[member.id] ?? "1");
-        if (!Number.isInteger(value) || value < 1) {
-          return `Porsi untuk ${member.name} harus bilangan bulat minimal 1.`;
-        }
-      }
-    }
-    return null;
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -125,16 +81,17 @@ export function AddBillForm({ room, currentMemberId }: AddBillFormProps) {
     setError(null);
     setSubmitting(true);
     try {
+      const payload = buildPayload();
       const response = await fetch(
         `/api/rooms/${encodeURIComponent(room.code)}/expenses`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            description: description.trim(),
-            amount,
-            payerId,
-            splitMode: mode,
+            description: payload.description,
+            amount: payload.amount,
+            payerId: payload.payerId,
+            splitMode: payload.splitMode,
             participants: participants.map((member) => member.id),
             shares: participants.map((member) => ({
               memberId: member.id,

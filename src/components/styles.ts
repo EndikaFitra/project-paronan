@@ -37,6 +37,18 @@ export const paperDangerButtonClass =
 export const errorTextClass =
   "text-sm font-medium text-chalk-red [text-shadow:0_1px_2px_rgb(0_0_0/0.4)]";
 
+/** Error di atas kertas: tinta oksida, bukan kapur merah papan. */
+export const paperErrorTextClass =
+  "text-sm font-medium text-paper-danger";
+
+/** Input kertas: isi krem, teks tinta — dipakai form di dalam nota. */
+export const paperInputClass =
+  "w-full rounded-lg border border-[#5a5245]/50 bg-paper px-3 py-2.5 text-base text-paper-ink outline-none transition " +
+  "placeholder:text-paper-muted " +
+  "focus:border-paper-ink focus:ring-2 focus:ring-paper-ink/30 " +
+  "hover:border-[#5a5245]/70 " +
+  "disabled:cursor-not-allowed disabled:border-[#5a5245]/30 disabled:text-paper-muted disabled:opacity-70";
+
 /** Chip label kertas untuk rincian split pada nota. */
 export const paperChipClass =
   "min-w-0 rounded-sm border border-[#5a5245]/40 bg-[#201c16]/5 px-2 py-0.5 text-xs text-paper-muted";

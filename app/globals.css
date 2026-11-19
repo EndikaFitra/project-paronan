@@ -23,6 +23,8 @@
   --color-paper: #f5eeda;
   --color-paper-ink: #201c16;
   --color-paper-muted: #5a5245;
+  /* Tinta oksida: satu-satunya merah yang sah di atas kertas. */
+  --color-paper-danger: #8f2f22;
 
   /* Type: next/font wires --font-kalam / --font-geist-mono / --font-figtree
      on <html>; fallbacks keep the vars alive even if a face fails. */
