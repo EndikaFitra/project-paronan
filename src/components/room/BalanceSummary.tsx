@@ -3,6 +3,8 @@ import { formatSignedRupiah } from "@/src/lib/format";
 
 interface BalanceSummaryProps {
   room: RoomSummary;
+  /** ID anggota yang sedang melihat halaman; null bila belum bergabung. */
+  currentMemberId?: string | null;
 }
 
 /** Inisial anggota sebagai penanda baca, tanpa bentuk wadah. */
@@ -25,8 +27,18 @@ function MemberMark({ name }: { name: string }) {
 }
 
 /** Ringkasan saldo net per anggota (kuning = menerima, merah = berutang). */
-export function BalanceSummary({ room }: BalanceSummaryProps) {
-  const members = room.members;
+export function BalanceSummary({
+  room,
+  currentMemberId = null,
+}: BalanceSummaryProps) {
+  // Baris pemirsa diangkat ke atas; urutan anggota lain tidak diubah
+  // supaya papan tidak "mengocok" setiap render.
+  const members = currentMemberId
+    ? [
+        ...room.members.filter((member) => member.id === currentMemberId),
+        ...room.members.filter((member) => member.id !== currentMemberId),
+      ]
+    : room.members;
 
   return (
     <section
@@ -46,9 +58,10 @@ export function BalanceSummary({ room }: BalanceSummaryProps) {
       {members.length === 0 ? (
         <p className="text-sm text-chalk-dim">Belum ada anggota di room ini.</p>
       ) : (
-        <ul className="grid gap-3 sm:grid-cols-2">
+        <ul className="grid gap-3">
           {members.map((member) => {
             const balance = room.balances[member.id] ?? 0;
+            const isViewer = member.id === currentMemberId;
             const tone =
               balance > 0
                 ? "text-chalk-yellow"
@@ -59,13 +72,22 @@ export function BalanceSummary({ room }: BalanceSummaryProps) {
             return (
               <li
                 key={member.id}
-                className="flex items-center justify-between gap-3 rounded-lg border border-chalk/20 bg-board-deep px-3.5 py-3"
+                className={`flex min-w-0 items-center justify-between gap-3 rounded-lg border bg-board-deep px-3.5 py-3 ${
+                  isViewer ? "border-chalk/50" : "border-chalk/20"
+                }`}
               >
                 <span className="flex min-w-0 items-center gap-2.5">
                   <MemberMark name={member.name} />
-                  <span className="min-w-0 truncate text-sm font-medium text-chalk">
-                    {member.name}
-                  </span>
+                  <div className="min-w-0 max-w-full">
+                    <p className="truncate text-sm font-medium text-chalk">
+                      {member.name}
+                    </p>
+                    {isViewer ? (
+                      <p className="font-chalk text-xs text-chalk-dim">
+                        (kamu)
+                      </p>
+                    ) : null}
+                  </div>
                 </span>
                 <span className={`tnum shrink-0 text-xl font-bold ${tone}`}>
                   {formatSignedRupiah(balance)}

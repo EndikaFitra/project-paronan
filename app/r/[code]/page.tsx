@@ -5,7 +5,7 @@ import { BalanceSummary } from "@/src/components/room/BalanceSummary";
 import { BillList } from "@/src/components/room/BillList";
 import { JoinRoomPanel } from "@/src/components/room/JoinRoomPanel";
 import { RememberRoom } from "@/src/components/room/RememberRoom";
-import { RoomHeader } from "@/src/components/room/RoomHeader";
+import { RoomHeader, CircledTotal } from "@/src/components/room/RoomHeader";
 import { SettlementPanel } from "@/src/components/room/SettlementPanel";
 import { StickyAddBillBar } from "@/src/components/room/StickyAddBillBar";
 import { BoardFrame } from "@/src/components/BoardFrame";
@@ -34,6 +34,8 @@ export default async function RoomPage({ params }: RoomPageProps) {
   const isMember = room.members.some((member) => member.id === memberCookie);
   const currentMemberId = isMember ? memberCookie : null;
 
+  const totalBills = room.bills.reduce((sum, bill) => sum + bill.amount, 0);
+
   return (
     <main className="mx-auto w-full max-w-5xl px-3 py-4 pb-28 sm:px-6 sm:py-8 lg:pb-8">
       <RememberRoom code={room.code} name={room.name} />
@@ -44,18 +46,20 @@ export default async function RoomPage({ params }: RoomPageProps) {
             code={room.code}
             memberCount={room.members.length}
             billCount={room.bills.length}
-            totalBills={room.bills.reduce(
-              (sum, bill) => sum + bill.amount,
-              0,
-            )}
-            showJoinCta={!currentMemberId}
           />
 
-          {currentMemberId ? null : <JoinRoomPanel code={room.code} />}
+          {currentMemberId ? (
+            <CircledTotal totalBills={totalBills} />
+          ) : (
+            <>
+              <JoinRoomPanel code={room.code} />
+              <CircledTotal totalBills={totalBills} />
+            </>
+          )}
 
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
-            <BalanceSummary room={room} />
-            <SettlementPanel room={room} />
+            <BalanceSummary room={room} currentMemberId={currentMemberId} />
+            <SettlementPanel room={room} currentMemberId={currentMemberId} />
           </div>
 
           <div id="tambah-tagihan" className="scroll-mt-4">

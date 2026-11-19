@@ -3,26 +3,39 @@ import Link from "next/link";
 import { CopyLinkButton } from "@/src/components/room/CopyLinkButton";
 import { ChalkCircle } from "@/src/components/chalk";
 import { formatRupiah } from "@/src/lib/format";
-import type { RoomSummary } from "@/src/lib/api";
 
 interface RoomHeaderProps {
   name: string;
   code: string;
   memberCount: number;
   billCount: number;
-  totalBills: number;
-  /** Tampilkan tombol "Gabung" bila pengunjung belum menjadi anggota. */
-  showJoinCta: boolean;
 }
 
-/** Header room di dalam bingkai papan: nama kapur, kode dalam kotak kapur, total dilingkari. */
+/** Total tagihan dilingkari kapur; dipakai di bawah header room. */
+export function CircledTotal({ totalBills }: { totalBills: number }) {
+  return (
+    <p className="relative mt-6 inline-block px-3 py-1.5">
+      <span className="text-lg text-chalk">
+        Total tagihan:{" "}
+        <span className="tnum text-2xl font-semibold text-chalk">
+          {formatRupiah(totalBills)}
+        </span>
+      </span>
+      {/* key = total: lingkaran digambar ulang (write-on) tiap kali
+          total berubah setelah tagihan disimpan. Di bawah
+          prefers-reduced-motion .chalk-draw tidak beranimasi
+          (lihat globals.css) dan lingkaran tetap terlihat penuh. */}
+      <ChalkCircle key={totalBills} className="inset-0" />
+    </p>
+  );
+}
+
+/** Header room di dalam bingkai papan: nama kapur, kode dalam kotak kapur. */
 export function RoomHeader({
   name,
   code,
   memberCount,
   billCount,
-  totalBills,
-  showJoinCta,
 }: RoomHeaderProps) {
   return (
     <header>
@@ -51,31 +64,9 @@ export function RoomHeader({
         </div>
 
         <div className="flex shrink-0 flex-col items-start gap-2 sm:items-end">
-          {showJoinCta ? (
-            <a
-              href="#gabung-room-panel"
-              className="inline-flex min-h-11 items-center justify-center rounded-lg bg-chalk-yellow px-4 py-2 text-sm font-semibold text-board-deep shadow-press transition hover:bg-[#f0d175] active:translate-y-px"
-            >
-              Gabung
-            </a>
-          ) : null}
           <CopyLinkButton code={code} />
         </div>
       </div>
-
-      <p className="relative mt-6 inline-block px-3 py-1.5">
-        <span className="text-lg text-chalk">
-          Total tagihan:{" "}
-          <span className="tnum text-2xl font-semibold text-chalk">
-            {formatRupiah(totalBills)}
-          </span>
-        </span>
-        {/* key = total: lingkaran digambar ulang (write-on) tiap kali
-            total berubah setelah tagihan disimpan. Di bawah
-            prefers-reduced-motion .chalk-draw tidak beranimasi
-            (lihat globals.css) dan lingkaran tetap terlihat penuh. */}
-        <ChalkCircle key={totalBills} className="inset-0" />
-      </p>
     </header>
   );
 }
